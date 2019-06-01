@@ -63,7 +63,7 @@ end
 TeamType_civ={"c1","c2","c3","c4","c5"}
 TeamType_civ_Reinforce = function()
 	OrderIndex_civ=0
-	TeamInstance_civ=Reinforcements.Reinforce(spain, TeamType_civ,{CPos.New(80, 45)}, DateTime.Seconds(0))
+	local TeamInstance_civ=Reinforcements.Reinforce(spain, TeamType_civ,{CPos.New(80, 45)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ == 0 then
@@ -81,7 +81,7 @@ end
 TeamType_civ0={"c1","c2","c3","c4"}
 TeamType_civ0_Reinforce = function()
 	OrderIndex_civ0=0
-	TeamInstance_civ0=Reinforcements.Reinforce(spain, TeamType_civ0,{CPos.New(84, 42)}, DateTime.Seconds(0))
+	local TeamInstance_civ0=Reinforcements.Reinforce(spain, TeamType_civ0,{CPos.New(84, 42)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ0, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ0 == 0 then
@@ -99,7 +99,7 @@ end
 TeamType_civ1={"c1","c2","c3"}
 TeamType_civ1_Reinforce = function()
 	OrderIndex_civ1=0
-	TeamInstance_civ1=Reinforcements.Reinforce(spain, TeamType_civ1,{CPos.New(80, 41)}, DateTime.Seconds(0))
+	local TeamInstance_civ1=Reinforcements.Reinforce(spain, TeamType_civ1,{CPos.New(80, 41)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ1, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ1 == 0 then
@@ -117,7 +117,7 @@ end
 TeamType_civ2={"c1","c2"}
 TeamType_civ2_Reinforce = function()
 	OrderIndex_civ2=0
-	TeamInstance_civ2=Reinforcements.Reinforce(spain, TeamType_civ2,{CPos.New(86, 46)}, DateTime.Seconds(0))
+	local TeamInstance_civ2=Reinforcements.Reinforce(spain, TeamType_civ2,{CPos.New(86, 46)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ2, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ2 == 0 then
@@ -135,7 +135,7 @@ end
 TeamType_civ3={"c1"}
 TeamType_civ3_Reinforce = function()
 	OrderIndex_civ3=0
-	TeamInstance_civ3=Reinforcements.Reinforce(spain, TeamType_civ3,{CPos.New(76, 42)}, DateTime.Seconds(0))
+	local TeamInstance_civ3=Reinforcements.Reinforce(spain, TeamType_civ3,{CPos.New(76, 42)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ3, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ3 == 0 then
@@ -153,7 +153,7 @@ end
 TeamType_civ4={"c9"}
 TeamType_civ4_Reinforce = function()
 	OrderIndex_civ4=0
-	TeamInstance_civ4=Reinforcements.Reinforce(spain, TeamType_civ4,{CPos.New(82, 47)}, DateTime.Seconds(0))
+	local TeamInstance_civ4=Reinforcements.Reinforce(spain, TeamType_civ4,{CPos.New(82, 47)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ4, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ4 == 0 then
@@ -171,7 +171,7 @@ end
 TeamType_civ5={"c8","c9"}
 TeamType_civ5_Reinforce = function()
 	OrderIndex_civ5=0
-	TeamInstance_civ5=Reinforcements.Reinforce(spain, TeamType_civ5,{CPos.New(85, 50)}, DateTime.Seconds(0))
+	local TeamInstance_civ5=Reinforcements.Reinforce(spain, TeamType_civ5,{CPos.New(85, 50)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ5, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ5 == 0 then
@@ -189,7 +189,7 @@ end
 TeamType_civ6={"c7","c8","c9"}
 TeamType_civ6_Reinforce = function()
 	OrderIndex_civ6=0
-	TeamInstance_civ6=Reinforcements.Reinforce(spain, TeamType_civ6,{CPos.New(81, 50)}, DateTime.Seconds(0))
+	local TeamInstance_civ6=Reinforcements.Reinforce(spain, TeamType_civ6,{CPos.New(81, 50)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ6, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ6 == 0 then
@@ -207,7 +207,7 @@ end
 TeamType_civ7={"c6","c7","c8","c9"}
 TeamType_civ7_Reinforce = function()
 	OrderIndex_civ7=0
-	TeamInstance_civ7=Reinforcements.Reinforce(spain, TeamType_civ7,{CPos.New(78, 44)}, DateTime.Seconds(0))
+	local TeamInstance_civ7=Reinforcements.Reinforce(spain, TeamType_civ7,{CPos.New(78, 44)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civ7, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civ7 == 0 then
@@ -240,7 +240,7 @@ end
 TeamType_trap={"e1","e1","e3","e3","e3"}
 TeamType_trap_Reinforce = function()
 	OrderIndex_trap=0
-	TeamInstance_trap=Reinforcements.Reinforce(greece, TeamType_trap,{CPos.New(29, 93)}, DateTime.Seconds(0))
+	local TeamInstance_trap=Reinforcements.Reinforce(greece, TeamType_trap,{CPos.New(29, 93)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_trap, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_trap == 0 then
@@ -258,7 +258,7 @@ end
 TeamType_civv={"c1","c2","c3","c4","c5"}
 TeamType_civv_Reinforce = function()
 	OrderIndex_civv=0
-	TeamInstance_civv=Reinforcements.Reinforce(spain, TeamType_civv,{CPos.New(29, 93)}, DateTime.Seconds(0))
+	local TeamInstance_civv=Reinforcements.Reinforce(spain, TeamType_civv,{CPos.New(29, 93)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civv, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civv == 0 then
@@ -276,7 +276,7 @@ end
 TeamType_civa={"c4","c5","c6","c7"}
 TeamType_civa_Reinforce = function()
 	OrderIndex_civa=0
-	TeamInstance_civa=Reinforcements.Reinforce(spain, TeamType_civa,{CPos.New(33, 92)}, DateTime.Seconds(0))
+	local TeamInstance_civa=Reinforcements.Reinforce(spain, TeamType_civa,{CPos.New(33, 92)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civa, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civa == 0 then
@@ -294,7 +294,7 @@ end
 TeamType_civb={"c2","c3","c4"}
 TeamType_civb_Reinforce = function()
 	OrderIndex_civb=0
-	TeamInstance_civb=Reinforcements.Reinforce(spain, TeamType_civb,{CPos.New(42, 42)}, DateTime.Seconds(0))
+	local TeamInstance_civb=Reinforcements.Reinforce(spain, TeamType_civb,{CPos.New(42, 42)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civb, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civb == 0 then
@@ -312,7 +312,7 @@ end
 TeamType_civc={"c5","c6"}
 TeamType_civc_Reinforce = function()
 	OrderIndex_civc=0
-	TeamInstance_civc=Reinforcements.Reinforce(spain, TeamType_civc,{CPos.New(33, 94)}, DateTime.Seconds(0))
+	local TeamInstance_civc=Reinforcements.Reinforce(spain, TeamType_civc,{CPos.New(33, 94)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civc, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civc == 0 then
@@ -330,7 +330,7 @@ end
 TeamType_civd={"c3"}
 TeamType_civd_Reinforce = function()
 	OrderIndex_civd=0
-	TeamInstance_civd=Reinforcements.Reinforce(spain, TeamType_civd,{CPos.New(35, 88)}, DateTime.Seconds(0))
+	local TeamInstance_civd=Reinforcements.Reinforce(spain, TeamType_civd,{CPos.New(35, 88)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civd, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civd == 0 then
@@ -348,7 +348,7 @@ end
 TeamType_cive={"c3","c4"}
 TeamType_cive_Reinforce = function()
 	OrderIndex_cive=0
-	TeamInstance_cive=Reinforcements.Reinforce(spain, TeamType_cive,{CPos.New(38, 91)}, DateTime.Seconds(0))
+	local TeamInstance_cive=Reinforcements.Reinforce(spain, TeamType_cive,{CPos.New(38, 91)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_cive, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_cive == 0 then
@@ -366,7 +366,7 @@ end
 TeamType_civf={"c3","c4","c5"}
 TeamType_civf_Reinforce = function()
 	OrderIndex_civf=0
-	TeamInstance_civf=Reinforcements.Reinforce(spain, TeamType_civf,{CPos.New(30, 88)}, DateTime.Seconds(0))
+	local TeamInstance_civf=Reinforcements.Reinforce(spain, TeamType_civf,{CPos.New(30, 88)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_civf, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_civf == 0 then
@@ -414,7 +414,7 @@ end
 TeamType_msubs={"msub","msub"}
 TeamType_msubs_Reinforce = function()
 	OrderIndex_msubs=0
-	TeamInstance_msubs=Reinforcements.Reinforce(ussr, TeamType_msubs,{CPos.New(100, 67)}, DateTime.Seconds(0))
+	local TeamInstance_msubs=Reinforcements.Reinforce(ussr, TeamType_msubs,{CPos.New(100, 67)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_msubs, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_msubs == 0 then
@@ -435,7 +435,7 @@ end
 TeamType_lone={"c1","c2","c3"}
 TeamType_lone_Reinforce = function()
 	OrderIndex_lone=0
-	TeamInstance_lone=Reinforcements.Reinforce(spain, TeamType_lone,{CPos.New(57, 91)}, DateTime.Seconds(0))
+	local TeamInstance_lone=Reinforcements.Reinforce(spain, TeamType_lone,{CPos.New(57, 91)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_lone, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_lone == 0 then
@@ -453,7 +453,7 @@ end
 TeamType_lone0={"c5","c6","c7"}
 TeamType_lone0_Reinforce = function()
 	OrderIndex_lone0=0
-	TeamInstance_lone0=Reinforcements.Reinforce(spain, TeamType_lone0,{CPos.New(70, 61)}, DateTime.Seconds(0))
+	local TeamInstance_lone0=Reinforcements.Reinforce(spain, TeamType_lone0,{CPos.New(70, 61)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_lone0, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_lone0 == 0 then
@@ -496,7 +496,7 @@ end
 TeamType_badge0={"badr"}
 TeamType_badge0_Reinforce = function()
 	OrderIndex_badge0=0
-	TeamInstance_badge0=Reinforcements.Reinforce(ussr, TeamType_badge0,{CPos.New(26, 84)}, DateTime.Seconds(0))
+	local TeamInstance_badge0=Reinforcements.Reinforce(ussr, TeamType_badge0,{CPos.New(26, 84)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_badge0, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_badge0 == 0 then
@@ -514,7 +514,7 @@ end
 TeamType_opdef={"e1"}
 TeamType_opdef_Reinforce = function()
 	OrderIndex_opdef=0
-	TeamInstance_opdef=Reinforcements.Reinforce(greece, TeamType_opdef,{CPos.New(31, 55)}, DateTime.Seconds(0))
+	local TeamInstance_opdef=Reinforcements.Reinforce(greece, TeamType_opdef,{CPos.New(31, 55)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_opdef, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_opdef == 0 then
@@ -532,7 +532,7 @@ end
 TeamType_opdef0={"e3"}
 TeamType_opdef0_Reinforce = function()
 	OrderIndex_opdef0=0
-	TeamInstance_opdef0=Reinforcements.Reinforce(greece, TeamType_opdef0,{CPos.New(34, 55)}, DateTime.Seconds(0))
+	local TeamInstance_opdef0=Reinforcements.Reinforce(greece, TeamType_opdef0,{CPos.New(34, 55)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_opdef0, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_opdef0 == 0 then
@@ -573,7 +573,7 @@ end
 TeamType_wav1={"e1"}
 TeamType_wav1_Reinforce = function()
 	OrderIndex_wav1=0
-	TeamInstance_wav1=Reinforcements.Reinforce(greece, TeamType_wav1,{CPos.New(78, 96)}, DateTime.Seconds(0))
+	local TeamInstance_wav1=Reinforcements.Reinforce(greece, TeamType_wav1,{CPos.New(78, 96)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_wav1, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_wav1 == 0 then
@@ -591,7 +591,7 @@ end
 TeamType_wav2={"e3"}
 TeamType_wav2_Reinforce = function()
 	OrderIndex_wav2=0
-	TeamInstance_wav2=Reinforcements.Reinforce(greece, TeamType_wav2,{CPos.New(81, 96)}, DateTime.Seconds(0))
+	local TeamInstance_wav2=Reinforcements.Reinforce(greece, TeamType_wav2,{CPos.New(81, 96)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_wav2, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_wav2 == 0 then
@@ -609,7 +609,7 @@ end
 TeamType_wav3={"1tnk","jeep"}
 TeamType_wav3_Reinforce = function()
 	OrderIndex_wav3=0
-	TeamInstance_wav3=Reinforcements.Reinforce(greece, TeamType_wav3,{CPos.New(88, 91)}, DateTime.Seconds(0))
+	local TeamInstance_wav3=Reinforcements.Reinforce(greece, TeamType_wav3,{CPos.New(88, 91)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_wav3, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_wav3 == 0 then
@@ -696,7 +696,7 @@ end
 TeamType_dest={"dd","dd","dd","dd"}
 TeamType_dest_Reinforce = function()
 	OrderIndex_dest=0
-	TeamInstance_dest=Reinforcements.Reinforce(multi2, TeamType_dest,{CPos.New(100, 67)}, DateTime.Seconds(0))
+	local TeamInstance_dest=Reinforcements.Reinforce(multi2, TeamType_dest,{CPos.New(100, 67)}, DateTime.Seconds(0))
 	Utils.Do(TeamInstance_dest, function(Act)
 		Trigger.OnIdle(Act, function()
 			if OrderIndex_dest == 0 then
@@ -1004,6 +1004,11 @@ Trigger_back_Logic=function()
 end
 
 Trigger_back_Event1_Setup=function()
+	local Local_TriggerTeam_back={Actor_Structure_8,Actor_Structure_9,Actor_Structure_11,Actor_Structure_12,Actor_Structure_13,Actor_Structure_14,Actor_Structure_15,Actor_Structure_16,Actor_Structure_17}
+	Trigger.OnAnyKilled(Local_TriggerTeam_back,function()
+		Trigger_back_Event1_Flag = 1
+		Trigger_back_Logic()
+	end)
 end
 
 Trigger_back_Event1_Tick=function()
@@ -1233,13 +1238,23 @@ Trigger_rein_Logic=function()
 end
 
 Trigger_rein_Event1_Setup=function()
-	--Trigger Error,Name:rein,Type:3,Wrong CellTrigger
+	Trigger.OnCapture(Actor_Structure_52,function(self, captor, oldOwner, newOwner)
+		if newOwner == ussr then
+			Trigger_rein_Event1_Flag = 1
+			Trigger_rein_Logic()
+		end
+	end)
 end
 
 Trigger_rein_Event1_Tick=function()
 end
 
 Trigger_rein_Event2_Setup=function()
+	local Local_TriggerTeam_rein={Actor_Structure_52}
+	Trigger.OnAnyKilled(Local_TriggerTeam_rein,function()
+		Trigger_rein_Event2_Flag = 1
+		Trigger_rein_Logic()
+	end)
 end
 
 Trigger_rein_Event2_Tick=function()
@@ -1545,6 +1560,9 @@ Trigger_hel1_Action1=function()
 end
 
 Trigger_hel1_Action2=function()
+	Trigger_bde0_Event1_Flag=1
+	Trigger_bde0_Event1_Flag=2
+	Trigger_bde0_Logic()
 end
 
 Trigger_hel1_Action=function()
@@ -1824,13 +1842,23 @@ Trigger_clr_Logic=function()
 end
 
 Trigger_clr_Event1_Setup=function()
+	local Local_TriggerTeam_clr={Actor_Structure_19,Actor_Structure_23}
+	Trigger.OnAnyKilled(Local_TriggerTeam_clr,function()
+		Trigger_clr_Event1_Flag = 1
+		Trigger_clr_Logic()
+	end)
 end
 
 Trigger_clr_Event1_Tick=function()
 end
 
 Trigger_clr_Event2_Setup=function()
-	--Trigger Error,Name:clr,Type:2,Wrong CellTrigger
+	Trigger.OnCapture(Actor_Structure_19,function(self, captor, oldOwner, newOwner)
+		if newOwner == ussr then
+			Trigger_clr_Event2_Flag = 1
+			Trigger_clr_Logic()
+		end
+	end)
 end
 
 Trigger_clr_Event2_Tick=function()
@@ -1864,6 +1892,9 @@ Trigger_leav_Event1_Tick=function()
 end
 
 Trigger_bdef_Action1=function()
+	Trigger_bde0_Event1_Flag=1
+	Trigger_bde0_Event1_Flag=2
+	Trigger_bde0_Logic()
 end
 
 Trigger_bdef_Action2=function()
@@ -2167,13 +2198,23 @@ Trigger_clr0_Logic=function()
 end
 
 Trigger_clr0_Event1_Setup=function()
+	local Local_TriggerTeam_clr0={Actor_Structure_18,Actor_Structure_24}
+	Trigger.OnAnyKilled(Local_TriggerTeam_clr0,function()
+		Trigger_clr0_Event1_Flag = 1
+		Trigger_clr0_Logic()
+	end)
 end
 
 Trigger_clr0_Event1_Tick=function()
 end
 
 Trigger_clr0_Event2_Setup=function()
-	--Trigger Error,Name:clr0,Type:2,Wrong CellTrigger
+	Trigger.OnCapture(Actor_Structure_18,function(self, captor, oldOwner, newOwner)
+		if newOwner == ussr then
+			Trigger_clr0_Event2_Flag = 1
+			Trigger_clr0_Logic()
+		end
+	end)
 end
 
 Trigger_clr0_Event2_Tick=function()
@@ -2287,9 +2328,15 @@ Trigger_win1_Event2_Tick=function()
 end
 
 Trigger_pill_Action1=function()
+	Trigger_bde0_Event1_Flag=1
+	Trigger_bde0_Event1_Flag=2
+	Trigger_bde0_Logic()
 end
 
 Trigger_pill_Action2=function()
+	Trigger_hel_Event1_Flag=1
+	Trigger_hel_Event1_Flag=2
+	Trigger_hel_Logic()
 end
 
 Trigger_pill_Action=function()
@@ -2307,6 +2354,11 @@ Trigger_pill_Logic=function()
 end
 
 Trigger_pill_Event1_Setup=function()
+	local Local_TriggerTeam_pill={Actor_Structure_62,Actor_Structure_63}
+	Trigger.OnAnyKilled(Local_TriggerTeam_pill,function()
+		Trigger_pill_Event1_Flag = 1
+		Trigger_pill_Logic()
+	end)
 end
 
 Trigger_pill_Event1_Tick=function()

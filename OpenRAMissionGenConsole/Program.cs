@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-
+using OpenRA.Mods.Common.FileFormats;
 
 namespace OpenRAMissionGenConsole
 {
@@ -13,7 +13,7 @@ namespace OpenRAMissionGenConsole
         static void Main(string[] args)
         {
             var ini = new Ra95MissionIni();
-            if (!ini.LoadFile("scu40ea.ini"))
+            if (!ini.LoadFile("scu44ea.ini"))
             {
                 Console.WriteLine("Ini Paser Error!");
             }
@@ -85,6 +85,12 @@ namespace OpenRAMissionGenConsole
         public List<Ra95MissionIni_Unit> Units = new List<Ra95MissionIni_Unit>();
         public List<Ra95MissionIni_Ship> Ships = new List<Ra95MissionIni_Ship>();
         public List<Ra95MissionIni_Infantry> Infantries = new List<Ra95MissionIni_Infantry>();
+        public List<Ra95MissionIni_Overlay> Overlays = new List<Ra95MissionIni_Overlay>();
+        public List<Ra95MissionIni_Terrain> Terrains = new List<Ra95MissionIni_Terrain>();
+
+        public Ra95MissionIni_Map Map = new Ra95MissionIni_Map();
+
+        public Ra95MissionIni_Basic Basic = new Ra95MissionIni_Basic();
 
         public String Briefing = String.Empty;
 
@@ -166,6 +172,14 @@ namespace OpenRAMissionGenConsole
             Ships = new List<Ra95MissionIni_Ship>();
             Infantries = new List<Ra95MissionIni_Infantry>();
 
+            Terrains = new List<Ra95MissionIni_Terrain>();
+
+            Map = new Ra95MissionIni_Map();
+
+            Overlays = new List<Ra95MissionIni_Overlay>();
+
+            Basic = new Ra95MissionIni_Basic();
+
             if (iniBlocks == null) return false;
             if (iniBlocks.Count == 0) return false;
 
@@ -199,6 +213,7 @@ namespace OpenRAMissionGenConsole
                     foreach (var iniPair in iniBlock.iniPairs)
                     {
                         if (iniPair.key == "PlayerControl" && (iniPair.value == "yes" || iniPair.value == "Yes" || iniPair.value == "true" || iniPair.value == "True" || iniPair.value == "1")) Country.PlayerControl = true;
+                        else if (iniPair.key == "Allies") Country.Allies = iniPair.value;
                     }
                     Countries.Add(Country);
                 }
@@ -295,7 +310,6 @@ namespace OpenRAMissionGenConsole
                 }
                 else if (iniBlock.section == "STRUCTURES")
                 {
-                    Briefing = String.Empty;
                     foreach (var inipair in iniBlock.iniPairs)
                     {
                         var Structure = new Ra95MissionIni_Structure();
@@ -307,7 +321,6 @@ namespace OpenRAMissionGenConsole
                 }
                 else if (iniBlock.section == "SHIPS")
                 {
-                    Briefing = String.Empty;
                     foreach (var inipair in iniBlock.iniPairs)
                     {
                         var Ship = new Ra95MissionIni_Ship();
@@ -319,7 +332,6 @@ namespace OpenRAMissionGenConsole
                 }
                 else if (iniBlock.section == "UNITS")
                 {
-                    Briefing = String.Empty;
                     foreach (var inipair in iniBlock.iniPairs)
                     {
                         var Unit = new Ra95MissionIni_Unit();
@@ -331,7 +343,6 @@ namespace OpenRAMissionGenConsole
                 }
                 else if (iniBlock.section == "INFANTRY")
                 {
-                    Briefing = String.Empty;
                     foreach (var inipair in iniBlock.iniPairs)
                     {
                         var Infantry = new Ra95MissionIni_Infantry();
@@ -341,22 +352,157 @@ namespace OpenRAMissionGenConsole
                         }
                     }
                 }
+                else if (iniBlock.section == "Basic")
+                {
+                    foreach (var inipair in iniBlock.iniPairs)
+                    {
+                        /*
+                        Name=Shock Therapy
+                        Intro=<none>
+                        Brief=<none>
+                        Win=SOVTSTAR
+                        Lose=SOVCEMET
+                        Action=<none>
+                        Player=USSR
+                        Theme=No theme
+                        CarryOverMoney=0
+                        ToCarryOver=no
+                        ToInherit=no
+                        TimerInherit=no
+                        CivEvac=no
+                        NewINIFormat=3
+                        CarryOverCap=0
+                        EndOfGame=no
+                        NoSpyPlane=yes
+                        SkipScore=no
+                        OneTimeOnly=yes
+                        SkipMapSelect=no
+                        Official=yes
+                        FillSilos=yes
+                        TruckCrate=no
+                        Percent=0
+                         */
+                        if (inipair.key == "Name") Basic.Name = inipair.value;
+                        else if (inipair.key == "Intro") Basic.Intro = inipair.value;
+                        else if (inipair.key == "Brief") Basic.Brief = inipair.value;
+                        else if (inipair.key == "Win") Basic.Win = inipair.value;
+                        else if (inipair.key == "Lose") Basic.Lose = inipair.value;
+                        else if (inipair.key == "Action") Basic.Action = inipair.value;
+                        else if (inipair.key == "Player") Basic.Player = inipair.value;
+                        else if (inipair.key == "Theme") Basic.Theme = inipair.value;
+                        else if (inipair.key == "CarryOverMoney") Basic.CarryOverMoney = inipair.value;
+                        else if (inipair.key == "ToCarryOver") Basic.ToCarryOver = inipair.value;
+                        else if (inipair.key == "ToInherit") Basic.ToInherit = inipair.value;
+                        else if (inipair.key == "TimerInherit") Basic.TimerInherit = inipair.value;
+                        else if (inipair.key == "CivEvac") Basic.CivEvac = inipair.value;
+                        else if (inipair.key == "NewINIFormat") Basic.NewINIFormat = inipair.value;
+                        else if (inipair.key == "CarryOverCap") Basic.CarryOverCap = inipair.value;
+                        else if (inipair.key == "EndOfGame") Basic.EndOfGame = inipair.value;
+                        else if (inipair.key == "NoSpyPlane") Basic.NoSpyPlane = inipair.value;
+                        else if (inipair.key == "SkipScore") Basic.SkipScore = inipair.value;
+                        else if (inipair.key == "OneTimeOnly") Basic.OneTimeOnly = inipair.value;
+                        else if (inipair.key == "SkipMapSelect") Basic.SkipMapSelect = inipair.value;
+                        else if (inipair.key == "Official") Basic.Official = inipair.value;
+                        else if (inipair.key == "FillSilos") Basic.FillSilos = inipair.value;
+                        else if (inipair.key == "TruckCrate") Basic.TruckCrate = inipair.value;
+                        else if (inipair.key == "Percent") Basic.Percent = inipair.value;
+                    }
+                }
+                else if (iniBlock.section == "Map")
+                {
+                    foreach (var inipair in iniBlock.iniPairs)
+                    {
+                        if (inipair.key == "Theater")
+                        {
+                            if(inipair.value.ToUpper()== "TEMPERATE") Map.Theater = "TEMPERAT";
+                            else Map.Theater = inipair.value;
+                        }
+                        else if (inipair.key == "X") Map.X = int.Parse(inipair.value);
+                        else if (inipair.key == "Y") Map.Y = int.Parse(inipair.value);
+                        else if (inipair.key == "Width") Map.Width = int.Parse(inipair.value);
+                        else if (inipair.key == "Height") Map.Height = int.Parse(inipair.value);
+                    }
+                }
+                else if (iniBlock.section == "TERRAIN")
+                {
+                    foreach (var inipair in iniBlock.iniPairs)
+                    {
+                        var Terrain = new Ra95MissionIni_Terrain();
+                        Terrain.Terrain = inipair.value;
+                        Terrain.Pos.Parse(inipair.key);
+                        Terrains.Add(Terrain);
+
+                        //Console.WriteLine("Terrain:{0} X:{1} Y:{2}", Terrain.Terrain, Terrain.Pos.x, Terrain.Pos.y);
+                    }
+                }
+                else if (iniBlock.section == "OverlayPack")
+                {
+                    String Base64Str = String.Empty;
+                    foreach (var inipair in iniBlock.iniPairs)
+                    {
+                        Base64Str += inipair.value;
+                    }
+
+                    var data = Convert.FromBase64String(Base64Str);
+                    var chunks = new List<byte[]>();
+                    var reader = new BinaryReader(new MemoryStream(data));
+
+                    try
+                    {
+                        while (true)
+                        {
+                            var length = reader.ReadUInt32() & 0xdfffffff;
+                            var dest = new byte[8192];
+                            var src = reader.ReadBytes((int)length);
+
+                            LCWCompression.DecodeInto(src, dest);
+
+                            chunks.Add(dest);
+                        }
+                    }
+                    catch (EndOfStreamException) { }
+
+                    var ms = new MemoryStream();
+                    foreach (var chunk in chunks)
+                        ms.Write(chunk, 0, chunk.Length);
+                    ms.Position = 0;
+
+                    const int mapsize = 128;
+                    for (int y = 0; y < mapsize; y++)
+                    {
+                        for (int x = 0; x < mapsize; x++)
+                        {
+                            var o = ms.ReadByte();
+                            if (Ra95MissionIni_Overlay.IsOverlay(o))
+                            {
+                                var Overlay = new Ra95MissionIni_Overlay();
+                                Overlay.Overlay = Ra95MissionIni_Overlay.GetOverlayName(o);
+                                Overlay.Pos.x = x;
+                                Overlay.Pos.y = y;
+
+                                if(!Overlay.IsOre()) Overlays.Add(Overlay);
+                                //Console.WriteLine("Overlay:{0} X:{1} Y:{2}", Ra95MissionIni_Overlay.GetOverlayName(o), x, y);
+                            }
+                        }
+                    }
 
 
+                }
 
             }
+            
             /*
-            Console.WriteLine("Countries Cnt:{0}", Countries.Count);
-            Console.WriteLine("CellTriggers Cnt:{0}", CellTriggers.Count);
-            Console.WriteLine("Triggers Cnt:{0}", Triggers.Count);
-            Console.WriteLine("TeamTypes Cnt:{0}", TeamTypes.Count);
-            Console.WriteLine("Waypoints Cnt:{0}", Waypoints.Count);
-            Console.WriteLine("Briefing:{0}", Briefing);
-            Console.WriteLine("Structures Cnt:{0}", Structures.Count);
-            Console.WriteLine("Ships Cnt:{0}", Ships.Count);
-            Console.WriteLine("Units Cnt:{0}", Units.Count);
-            Console.WriteLine("Infantries Cnt:{0}", Infantries.Count);
-            */
+                Console.WriteLine("Countries Cnt:{0}", Countries.Count);
+                Console.WriteLine("CellTriggers Cnt:{0}", CellTriggers.Count);
+                Console.WriteLine("Triggers Cnt:{0}", Triggers.Count);
+                Console.WriteLine("TeamTypes Cnt:{0}", TeamTypes.Count);
+                Console.WriteLine("Waypoints Cnt:{0}", Waypoints.Count);
+                Console.WriteLine("Briefing:{0}", Briefing);
+                Console.WriteLine("Structures Cnt:{0}", Structures.Count);
+                Console.WriteLine("Ships Cnt:{0}", Ships.Count);
+                Console.WriteLine("Units Cnt:{0}", Units.Count);
+                Console.WriteLine("Infantries Cnt:{0}", Infantries.Count);
+                */
             return true;
         }
 
@@ -432,8 +578,124 @@ namespace OpenRAMissionGenConsole
             return ret;
         }
 
-        
         public bool Gen()
+        {
+            return GenMapYaml() && GenRuleYaml() && GenLua();
+        }
+
+        public bool GenMapYaml()
+        {
+            StreamWriter sw_mapyaml = new StreamWriter("map.yaml", false, Encoding.UTF8);
+
+            sw_mapyaml.Write("MapFormat: 11\n");
+            sw_mapyaml.Write("RequiresMod: ra\n");
+            sw_mapyaml.Write("Title: {0}\n",Basic.Name);
+            sw_mapyaml.Write("Author: Westwood Studios\n");
+            sw_mapyaml.Write("Tileset: {0}\n", Map.Theater.ToUpper());//Tileset: TEMPERAT
+            sw_mapyaml.Write("MapSize: 128,128\n");
+            sw_mapyaml.Write("Bounds: {0},{1},{2},{3}\n",Map.X,Map.Y,Map.Width,Map.Height);//Bounds: 26,32,73,67
+            sw_mapyaml.Write("Visibility: MissionSelector\n");
+            sw_mapyaml.Write("Categories: Campaign\n");
+            sw_mapyaml.Write("LockPreview: True\n");
+
+            sw_mapyaml.Write("Players:\n");
+
+            foreach(String DefaultCountry in DefaultCountries)
+            {
+                bool found = false;
+                foreach (var Country in Countries)
+                {
+                    if(Country.Name.ToLower()== DefaultCountry.ToLower())
+                    {
+                        sw_mapyaml.Write("\tPlayerReference@{0}:\n", Country.Name);
+                        sw_mapyaml.Write("\t\tName: {0}\n", Country.Name);
+                        if(Country.Name.ToLower()== "Neutral".ToLower()) sw_mapyaml.Write("\t\tOwnsWorld: True\n");
+                        sw_mapyaml.Write("\t\tFaction: {0}\n", Country.GetFaction());
+                        sw_mapyaml.Write("\t\tColor: {0}\n", Country.GetColor());
+                        if (Country.PlayerControl || Country.Name.ToLower() == Basic.Player.ToLower())
+                        {
+                            sw_mapyaml.Write("\t\tPlayable: True\n");
+                        }
+
+                        if (!String.IsNullOrWhiteSpace(Country.Allies)) sw_mapyaml.Write("\t\tAllies: {0}\n", Country.Allies);
+                        if(!String.IsNullOrWhiteSpace(Country.GetEnemies())) sw_mapyaml.Write("\t\tEnemies: {0}\n", Country.GetEnemies());
+
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                {
+                    sw_mapyaml.Write("\tPlayerReference@{0}:\n", DefaultCountry);
+                    sw_mapyaml.Write("\t\tName: {0}\n", DefaultCountry);
+                    sw_mapyaml.Write("\t\tFaction: allies\n");
+                    sw_mapyaml.Write("\t\tColor: FFFFFF\n");
+                }
+            }
+            
+            sw_mapyaml.Write("\nActors:\n");
+            for(int i=0;i<Overlays.Count;i++)
+            {
+                sw_mapyaml.Write("\tActor_Overlay_{0}: {1}\n", i,Overlays[i].Overlay.ToLower());
+                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Overlays[i].Pos.x, Overlays[i].Pos.y);
+                sw_mapyaml.Write("\t\tOwner: Neutral\n");
+            }
+            for (int i = 0; i < Terrains.Count; i++)
+            {
+                sw_mapyaml.Write("\tActor_Terrain_{0}: {1}\n", i, Terrains[i].Terrain.ToLower());
+                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Terrains[i].Pos.x, Terrains[i].Pos.y);
+                sw_mapyaml.Write("\t\tOwner: Neutral\n");
+            }
+            for (int i = 0; i < Structures.Count; i++)
+            {
+                sw_mapyaml.Write("\tActor_Structure_{0}: {1}\n", Structures[i].index, Structures[i].Structure.ToLower());
+                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Structures[i].Pos.x, Structures[i].Pos.y);
+                if (Structures[i].Structure.ToLower() == "v19") sw_mapyaml.Write("\t\tOwner: Neutral\n");
+                else sw_mapyaml.Write("\t\tOwner: {0}\n", Structures[i].Owner);
+                sw_mapyaml.Write("\t\tHealth: {0}\n", Structures[i].Health * 100 / 256);
+            }
+
+
+            for (int i = 0; i < Units.Count; i++)
+            {
+                sw_mapyaml.Write("\tActor_Unit_{0}: {1}\n", Units[i].index, Units[i].Unit.ToLower());
+                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Units[i].Pos.x, Units[i].Pos.y);
+                sw_mapyaml.Write("\t\tOwner: {0}\n", Units[i].Owner);
+                sw_mapyaml.Write("\t\tFacing: {0}\n", Units[i].Direction);
+                sw_mapyaml.Write("\t\tHealth: {0}\n", Units[i].Health*100/256);
+            }
+            for (int i = 0; i < Ships.Count; i++)
+            {
+                sw_mapyaml.Write("\tActor_Ship_{0}: {1}\n", Ships[i].index, Ships[i].Ship.ToLower());
+                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Ships[i].Pos.x, Ships[i].Pos.y);
+                sw_mapyaml.Write("\t\tOwner: {0}\n", Ships[i].Owner);
+                sw_mapyaml.Write("\t\tFacing: {0}\n", Ships[i].Direction);
+                sw_mapyaml.Write("\t\tHealth: {0}\n", Ships[i].Health * 100 / 256);
+            }
+            for (int i = 0; i < Infantries.Count; i++)
+            {
+                sw_mapyaml.Write("\tActor_Infantry_{0}: {1}\n", Infantries[i].index, Infantries[i].Infantry.ToLower());
+                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Infantries[i].Pos.x, Infantries[i].Pos.y);
+                sw_mapyaml.Write("\t\tOwner: {0}\n", Infantries[i].Owner);
+                sw_mapyaml.Write("\t\tFacing: {0}\n", Infantries[i].Direction);
+                sw_mapyaml.Write("\t\tSubCell: {0}\n", Infantries[i].PositionInCell);
+                sw_mapyaml.Write("\t\tHealth: {0}\n", Infantries[i].Health * 100 / 256);
+            }
+            
+            sw_mapyaml.Write("\nRules: ra|rules/campaign-rules.yaml, ra|rules/campaign-tooltips.yaml, ra|rules/campaign-palettes.yaml, rules.yaml\n");
+            
+            sw_mapyaml.Flush();
+            sw_mapyaml.Close();
+            return true;
+        }
+
+        public bool GenRuleYaml()
+        {
+            bool ret = true;
+            return ret;
+        }
+        
+        public bool GenLua()
         {
             StreamWriter sw_lua = new StreamWriter(FileName+".lua", false, Encoding.UTF8);
 
@@ -442,7 +704,7 @@ namespace OpenRAMissionGenConsole
 
             foreach (var CellTrigger in CellTriggers)
             {
-                GenCellTriggerDeclaration(sw_lua, CellTrigger);
+                GenLua_CellTriggerDeclaration(sw_lua, CellTrigger);
             }
 
 
@@ -458,21 +720,21 @@ namespace OpenRAMissionGenConsole
             
             foreach (var TeamType in TeamTypes)
             {
-                GenTeamTypeDeclaration(sw_lua, TeamType);
-                GenTeamTypeFunctions(sw_lua, TeamType);
+                GenLua_TeamTypeDeclaration(sw_lua, TeamType);
+                GenLua_TeamTypeFunctions(sw_lua, TeamType);
             }
 
             sw_lua.Write("\n\n");
 
             foreach (var Trigger in Triggers)
             {
-                GenTriggerAction(sw_lua, Trigger, 1);
-                GenTriggerAction(sw_lua, Trigger, 2);
-                GenTriggerLogic(sw_lua, Trigger);
-                GenTriggerEventSetup(sw_lua, Trigger, 1);
+                GenLua_TriggerAction(sw_lua, Trigger, 1);
+                GenLua_TriggerAction(sw_lua, Trigger, 2);
+                GenLua_TriggerLogic(sw_lua, Trigger);
+                GenLua_TriggerEventSetup(sw_lua, Trigger, 1);
                 if(Trigger.Type== (int)TriggerType.and|| Trigger.Type == (int)TriggerType.or|| Trigger.Type == (int)TriggerType.complex)
                 {
-                    GenTriggerEventSetup(sw_lua, Trigger, 2);
+                    GenLua_TriggerEventSetup(sw_lua, Trigger, 2);
                 }
             }
 
@@ -549,7 +811,7 @@ namespace OpenRAMissionGenConsole
             return true;
         }
 
-        private void GenCellTriggerDeclaration(StreamWriter sw_lua, Ra95MissionIni_CellTrigger CellTrigger)
+        private void GenLua_CellTriggerDeclaration(StreamWriter sw_lua, Ra95MissionIni_CellTrigger CellTrigger)
         {
             String celltrigerstr = "CellTrigger_" + CellTrigger.Name + "={";
 
@@ -562,7 +824,7 @@ namespace OpenRAMissionGenConsole
             sw_lua.Write(celltrigerstr);
         }
         
-        private void GenTeamTypeFunctions(StreamWriter sw_lua, Ra95MissionIni_TeamType TeamType)
+        private void GenLua_TeamTypeFunctions(StreamWriter sw_lua, Ra95MissionIni_TeamType TeamType)
         {
             //Create Team Function
             if (TeamType.Opt_Only_Autocreate_AI)
@@ -622,7 +884,7 @@ namespace OpenRAMissionGenConsole
                 sw_lua.Write("end\n\n");
             }
 
-
+            else
             //ReinForce function
             {
                 sw_lua.Write("TeamType_{0}_Reinforce = function()\n", TeamType.Name);
@@ -754,8 +1016,7 @@ namespace OpenRAMissionGenConsole
                         for (int numi = 0; numi < Teams[teamindex].Num; numi++)
                         {
                             teamstr += "\"" + Teams[teamindex].Type.ToLower() + "\"";
-                            if (teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1) ;
-                            else teamstr += ",";
+                            if(! (teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1)) teamstr += ",";
                         }
                     }
                     teamstr += "}\n";
@@ -801,12 +1062,16 @@ namespace OpenRAMissionGenConsole
                         }
                     }
                 }
+                else if (TeamType.HasUnit("badr") && TeamType.Teams.Count == 1)//para bomb
+                {
+
+                }
                 else
                 {
                     var Waypoint = new Ra95MissionIni_Waypoint();
                     if (GetWayPoint(TeamType.WayPoint, out Waypoint))
                     {
-                        sw_lua.Write("\tTeamInstance_{0}=Reinforcements.Reinforce({1}, TeamType_{0},{{CPos.New({2}, {3})}}, DateTime.Seconds(0))\n", 
+                        sw_lua.Write("\tlocal TeamInstance_{0}=Reinforcements.Reinforce({1}, TeamType_{0},{{CPos.New({2}, {3})}}, DateTime.Seconds(0))\n", 
                             TeamType.Name, 
                             DefaultCountries[TeamType.Owner].ToLower(), 
                             Waypoint.Pos.x, Waypoint.Pos.y);
@@ -833,13 +1098,13 @@ namespace OpenRAMissionGenConsole
                                 {
                                     var w = new Ra95MissionIni_Waypoint();
                                     GetWayPoint(Order.Para, out w);
-                                    sw_lua.Write("\t\t\t\tAct.Move(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
+                                    if(w!=null) sw_lua.Write("\t\t\t\tAct.Move(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
                                 }
                                 else if (Order.Order == TeamOrderType.Attack_Waypoint)
                                 {
                                     var w = new Ra95MissionIni_Waypoint();
                                     GetWayPoint(Order.Para, out w);
-                                    sw_lua.Write("\t\t\t\tAct.AttackMove(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
+                                    if (w != null) sw_lua.Write("\t\t\t\tAct.AttackMove(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
                                 }
                                 else
                                 {
@@ -864,7 +1129,7 @@ namespace OpenRAMissionGenConsole
             }
         }
 
-        private void GenTeamTypeDeclaration(StreamWriter sw_lua,Ra95MissionIni_TeamType TeamType)
+        private void GenLua_TeamTypeDeclaration(StreamWriter sw_lua,Ra95MissionIni_TeamType TeamType)
         {
             String teamstr = "TeamType_" + TeamType.Name + "={";
             for (int teamindex = 0; teamindex < TeamType.Teams.Count; teamindex++)
@@ -880,7 +1145,72 @@ namespace OpenRAMissionGenConsole
             sw_lua.Write(teamstr);
         }
 
-        private void GenTriggerAction(StreamWriter sw_lua,Ra95MissionIni_Trigger Trigger,int ActionNum)
+        private List<String> GetTriggerTeam(Ra95MissionIni_Trigger Trigger)
+        {
+            Ra95MissionIni_CellTrigger CellTrigger = null;
+            GetCelltrigger(Trigger.Name, out CellTrigger);
+
+            List<String> triggerunits = new List<string>();
+            foreach (var s in Structures)
+            {
+                if (s.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Structure_{0}", s.index));
+            }
+            foreach (var u in Units)
+            {
+                if (u.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Unit_{0}", u.index));
+            }
+            foreach (var s in Ships)
+            {
+                if (s.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Ship_{0}", s.index));
+            }
+            foreach (var i in Infantries)
+            {
+                if (i.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Infantry_{0}", i.index));
+            }
+            return triggerunits;
+        }
+        private void GenLua_TriggerTeamDeclaration(StreamWriter sw_lua, Ra95MissionIni_Trigger Trigger)
+        {
+            Ra95MissionIni_CellTrigger CellTrigger = null;
+            GetCelltrigger(Trigger.Name, out CellTrigger);
+
+            List<String> triggerunits = new List<string>();
+            foreach (var s in Structures)
+            {
+                if (s.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Structure_{0}", s.index));
+            }
+            foreach (var u in Units)
+            {
+                if (u.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Unit_{0}", u.index));
+            }
+            foreach (var s in Ships)
+            {
+                if (s.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Ship_{0}", s.index));
+            }
+            foreach (var i in Infantries)
+            {
+                if (i.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor_Infantry_{0}", i.index));
+            }
+
+            String teamstr = "\tlocal Local_TriggerTeam_" + Trigger.Name + "={";
+            for (int index = 0; index < triggerunits.Count; index++)
+            {
+                teamstr += triggerunits[index];
+                if (index < triggerunits.Count - 1) teamstr += ",";
+
+            }
+            teamstr += "}\n";
+            sw_lua.Write(teamstr);
+        }
+        private void GenLua_TriggerAction(StreamWriter sw_lua,Ra95MissionIni_Trigger Trigger,int ActionNum)
         {
             TriggerActionType Action = TriggerActionType.No_Action;
             int ActionParaA = -1;
@@ -917,10 +1247,17 @@ namespace OpenRAMissionGenConsole
             {
                 sw_lua.Write("\tGlobal_{0}=0\n", ActionParaC);
             }
+            else if(Action == TriggerActionType.Force_Trigger)
+            {
+                sw_lua.Write("\tTrigger_{0}_Event1_Flag=1\n", Triggers[ActionParaB].Name);
+                sw_lua.Write("\tTrigger_{0}_Event1_Flag=2\n", Triggers[ActionParaB].Name);
+                sw_lua.Write("\tTrigger_{0}_Logic()\n", Triggers[ActionParaB].Name);
+                
+            }
 
             sw_lua.Write("end\n\n");
         }
-        private void GenTriggerLogic(StreamWriter sw_lua, Ra95MissionIni_Trigger Trigger)
+        private void GenLua_TriggerLogic(StreamWriter sw_lua, Ra95MissionIni_Trigger Trigger)
         {
             sw_lua.Write("Trigger_{0}_Action=function()\n", Trigger.Name);
             if (Trigger.Action1 >= 0 && Trigger.Action1 <= 36)
@@ -1007,7 +1344,7 @@ namespace OpenRAMissionGenConsole
                 sw_lua.Write("end\n\n");
             }
         }
-        private void GenTriggerEventSetup(StreamWriter sw_lua, Ra95MissionIni_Trigger Trigger, int EventNum)
+        private void GenLua_TriggerEventSetup(StreamWriter sw_lua, Ra95MissionIni_Trigger Trigger, int EventNum)
         {
             TriggerEventType Event = TriggerEventType.No_Event;
             int EventParaA = -1;
@@ -1044,8 +1381,24 @@ namespace OpenRAMissionGenConsole
                     sw_lua.Write("\t\tend\n");
                     sw_lua.Write("\tend)\n", Trigger.Name);
                 }
-                else sw_lua.Write("\t--Trigger Error,Name:{0},Type:{1},Wrong CellTrigger\n", Trigger.Name, Trigger.Type);
-
+                else
+                {
+                    List<String> TriggerTeam = GetTriggerTeam(Trigger);
+                    if(TriggerTeam.Count>0)
+                    {
+                        sw_lua.Write("\tTrigger.OnCapture({0},function(self, captor, oldOwner, newOwner)\n", TriggerTeam[0]);
+                        sw_lua.Write("\t\tif newOwner == {0} then\n", DefaultCountries[Trigger.Owner].ToLower());
+                        sw_lua.Write("\t\t\tTrigger_{0}_Event{1}_Flag = 1\n", Trigger.Name, EventNum);
+                        sw_lua.Write("\t\t\tTrigger_{0}_Logic()\n", Trigger.Name);
+                        sw_lua.Write("\t\tend\n");
+                        sw_lua.Write("\tend)\n");
+                    }
+                    else
+                    {
+                        sw_lua.Write("\t--Trigger Error,Name:{0},Type:{1},Wrong CellTrigger\n", Trigger.Name, Trigger.Type);
+                    }
+                    
+                }
             }
             else if (Event == TriggerEventType.Elapsed_Time)
             {
@@ -1056,22 +1409,22 @@ namespace OpenRAMissionGenConsole
             }
             else if (Event == TriggerEventType.Destroyed_by_anybody)
             {
-                Ra95MissionIni_CellTrigger CellTrigger = null;
-                GetCelltrigger(Trigger.Name, out CellTrigger);
+                GenLua_TriggerTeamDeclaration(sw_lua, Trigger);
 
-                foreach (var u in Structures)
-                {
-                    if (u.Trigger== Trigger.Name)
-                    {
-                        Console.WriteLine(u.Structure);
-                    }
-                }
-
-                //sw_lua.Write("\tTrigger.AfterDelay(DateTime.Seconds({0}), function()\n", (EventParaB * 6).ToString());
-                //sw_lua.Write("\t\tTrigger_{0}_Event{1}_Flag = 1\n", Trigger.Name, EventNum);
-                //sw_lua.Write("\t\tTrigger_{0}_Logic()\n", Trigger.Name);
-                //sw_lua.Write("\tend)\n", Trigger.Name);
+                sw_lua.Write("\tTrigger.OnAnyKilled(Local_TriggerTeam_{0},function()\n", Trigger.Name);
+                sw_lua.Write("\t\tTrigger_{0}_Event{1}_Flag = 1\n", Trigger.Name, EventNum);
+                sw_lua.Write("\t\tTrigger_{0}_Logic()\n", Trigger.Name);
+                sw_lua.Write("\tend)\n");
             }
+            else if (Event == TriggerEventType.Low_Power)
+            {
+                sw_lua.Write("\tTrigger.OnAnyKilled(Local_TriggerTeam_{0},function()\n", Trigger.Name);
+                sw_lua.Write("\t\tTrigger_{0}_Event{1}_Flag = 1\n", Trigger.Name, EventNum);
+                sw_lua.Write("\t\tTrigger_{0}_Logic()\n", Trigger.Name);
+                sw_lua.Write("\tend)\n");
+            }
+
+            
             sw_lua.Write("end\n\n");
 
 
@@ -1105,6 +1458,55 @@ namespace OpenRAMissionGenConsole
 
         public List<IniPair> iniPairs = new List<IniPair>();
     }
+    class Ra95MissionIni_Overlay
+    {
+        private static string[] redAlertOverlayNames =
+        {
+            "sbag", "cycl", "brik", "fenc", "wood",
+            "gold01", "gold02", "gold03", "gold04",
+            "gem01", "gem02", "gem03", "gem04",
+            "v12", "v13", "v14", "v15", "v16", "v17", "v18",
+            "fpls", "wcrate", "scrate", "barb", "sbag",
+        };
+        public static bool IsOverlay(int type)
+        {
+            if (type < 0) return false;
+            else if (type >= redAlertOverlayNames.Length) return false;
+            return true;
+        }
+        public static String GetOverlayName(int type)
+        {
+            if (type < 0) return String.Empty;
+            else if (type >= redAlertOverlayNames.Length) return String.Empty;
+            return redAlertOverlayNames[type];
+        }
+
+        public String Overlay = String.Empty;
+        public Ra95MissionIni_Pos Pos=new Ra95MissionIni_Pos();
+
+        public bool IsOre()
+        {
+            bool ret = false;
+            if (Overlay == "gold01") ret = true;
+            else if (Overlay == "gold02") ret = true;
+            else if (Overlay == "gold03") ret = true;
+            else if (Overlay == "gold04") ret = true;
+            else if (Overlay == "gem01") ret = true;
+            else if (Overlay == "gem02") ret = true;
+            else if (Overlay == "gem03") ret = true;
+            else if (Overlay == "gem04") ret = true;
+            else if (Overlay == "wcrate") ret = true;
+            else if (Overlay == "scrate") ret = true;
+            return ret;
+        }
+    }
+
+    class Ra95MissionIni_Terrain
+    {
+        public String Terrain = String.Empty;
+        public Ra95MissionIni_Pos Pos = new Ra95MissionIni_Pos();
+    }
+
     class Ra95MissionIni_Country
     {
         /*
@@ -1131,6 +1533,86 @@ namespace OpenRAMissionGenConsole
         */
         public String Name = String.Empty;
         public bool PlayerControl = false;
+        public String Allies = String.Empty;
+
+        public String GetColor()
+        {
+            String ret = "FFFFFF";
+
+            if (Name== "England") ret = "008080";
+            else if (Name == "Germany") ret = "7090ff";
+            else if (Name == "France") ret = "7070ff";
+            else if (Name == "Greece") ret = "8080ff";
+            else if (Name == "GoodGuy") ret = "9090ff";
+
+            else if (Name == "Spain") ret = "FFFF80";
+
+            else if (Name == "Turkey") ret = "c08040";
+            else if (Name == "Ukraine") ret = "808000";//brown
+            else if (Name == "USSR") ret = "800000";//red
+            else if (Name == "BadGuy") ret = "900000";
+
+            else if (Name == "Neutral") ret = "FFFFFF";
+            else if (Name == "Special") ret = "FFFFFF";
+
+            else if (Name == "Multi1") ret = "800000";
+            else if (Name == "Multi2") ret = "008000";
+            else if (Name == "Multi3") ret = "000080";
+            else if (Name == "Multi4") ret = "808000";
+            else if (Name == "Multi5") ret = "008080";
+            else if (Name == "Multi6") ret = "800080";
+            else if (Name == "Multi7") ret = "40C000";
+            else if (Name == "Multi8") ret = "4000C0";
+            
+            return ret;
+        }
+        public String GetFaction()
+        {
+            String ret = "allies";
+
+            if (Name == "England") ret = "england";
+            else if (Name == "Germany") ret = "allies";
+            else if (Name == "France") ret = "allies";
+            else if (Name == "Greece") ret = "allies";
+            else if (Name == "GoodGuy") ret = "allies";
+
+            else if (Name == "Spain") ret = "allies";
+
+            else if (Name == "Turkey") ret = "soviet";
+            else if (Name == "Ukraine") ret = "soviet";
+            else if (Name == "USSR") ret = "soviet";
+            else if (Name == "BadGuy") ret = "soviet";
+
+            return ret;
+        }
+        public String GetEnemies()
+        {
+            String ret = String.Empty;
+
+            if (Name == "England") ret = "Ukraine,USSR,BadGuy";
+            else if (Name == "Germany") ret = "Ukraine,USSR,BadGuy";
+            else if (Name == "France") ret = "Ukraine,USSR,BadGuy";
+            else if (Name == "Greece") ret = "Ukraine,USSR,BadGuy";
+            else if (Name == "GoodGuy") ret = "Ukraine,USSR,BadGuy";
+
+            else if (Name == "Spain") ret = "Ukraine,USSR,BadGuy";
+
+            else if (Name == "Turkey") ret = "Ukraine,USSR,BadGuy";
+
+            else if (Name == "Ukraine") ret = "England,Germany,France,Greece,GoodGuy,Spain,Turkey";
+            else if (Name == "USSR") ret = "England,Germany,France,Greece,GoodGuy,Spain,Turkey";
+            else if (Name == "BadGuy") ret = "England,Germany,France,Greece,GoodGuy,Spain,Turkey";
+
+            return ret;
+        }
+    }
+    class Ra95MissionIni_Map
+    {
+        public String Theater = String.Empty;
+        public int X = 32;
+        public int Y = 32;
+        public int Width = 64;
+        public int Height = 64;
     }
     class Ra95MissionIni_Pos
     {
