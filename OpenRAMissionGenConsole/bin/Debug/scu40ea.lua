@@ -10,548 +10,83 @@ CellTrigger_att1={CPos.New(26,72),CPos.New(27,72),CPos.New(28,72),CPos.New(29,72
 CellTrigger_civv={CPos.New(29,84),CPos.New(30,84),CPos.New(31,84),CPos.New(32,84),CPos.New(33,84),CPos.New(34,84),CPos.New(35,84),CPos.New(36,84),CPos.New(37,84),CPos.New(38,84),CPos.New(39,84),CPos.New(40,84),CPos.New(28,85),CPos.New(29,85),CPos.New(30,85),CPos.New(31,85),CPos.New(32,85),CPos.New(33,85),CPos.New(34,85),CPos.New(35,85),CPos.New(36,85),CPos.New(37,85),CPos.New(38,85),CPos.New(39,85),CPos.New(40,85)}
 
 
-Waypoint_0 =  {CPos.New(51, 72)}
-Waypoint_1 =  {CPos.New(80, 45)}
-Waypoint_2 =  {CPos.New(84, 42)}
-Waypoint_3 =  {CPos.New(80, 41)}
-Waypoint_4 =  {CPos.New(86, 46)}
-Waypoint_5 =  {CPos.New(76, 42)}
-Waypoint_6 =  {CPos.New(82, 47)}
-Waypoint_7 =  {CPos.New(85, 50)}
-Waypoint_8 =  {CPos.New(81, 50)}
-Waypoint_9 =  {CPos.New(78, 44)}
-Waypoint_10 =  {CPos.New(73, 41)}
-Waypoint_11 =  {CPos.New(29, 93)}
-Waypoint_12 =  {CPos.New(33, 92)}
-Waypoint_13 =  {CPos.New(42, 42)}
-Waypoint_14 =  {CPos.New(33, 94)}
-Waypoint_15 =  {CPos.New(35, 88)}
-Waypoint_16 =  {CPos.New(38, 91)}
-Waypoint_17 =  {CPos.New(30, 88)}
-Waypoint_18 =  {CPos.New(30, 97)}
-Waypoint_19 =  {CPos.New(82, 77)}
-Waypoint_20 =  {CPos.New(100, 67)}
-Waypoint_21 =  {CPos.New(95, 83)}
-Waypoint_22 =  {CPos.New(37, 94)}
-Waypoint_23 =  {CPos.New(70, 61)}
-Waypoint_24 =  {CPos.New(57, 91)}
-Waypoint_25 =  {CPos.New(31, 44)}
-Waypoint_26 =  {CPos.New(32, 52)}
-Waypoint_27 =  {CPos.New(81, 92)}
-Waypoint_49 =  {CPos.New(26, 84)}
-Waypoint_51 =  {CPos.New(78, 87)}
-Waypoint_73 =  {CPos.New(31, 55)}
-Waypoint_74 =  {CPos.New(34, 55)}
-Waypoint_75 =  {CPos.New(81, 96)}
-Waypoint_76 =  {CPos.New(88, 91)}
-Waypoint_77 =  {CPos.New(78, 96)}
-Waypoint_96 =  {CPos.New(91, 78)}
-Waypoint_98 =  {CPos.New(51, 72)}
-Waypoint_99 =  {CPos.New(79, 70)}
+Waypoint_0 =  CPos.New(51, 72)
+Waypoint_1 =  CPos.New(80, 45)
+Waypoint_2 =  CPos.New(84, 42)
+Waypoint_3 =  CPos.New(80, 41)
+Waypoint_4 =  CPos.New(86, 46)
+Waypoint_5 =  CPos.New(76, 42)
+Waypoint_6 =  CPos.New(82, 47)
+Waypoint_7 =  CPos.New(85, 50)
+Waypoint_8 =  CPos.New(81, 50)
+Waypoint_9 =  CPos.New(78, 44)
+Waypoint_10 =  CPos.New(73, 41)
+Waypoint_11 =  CPos.New(29, 93)
+Waypoint_12 =  CPos.New(33, 92)
+Waypoint_13 =  CPos.New(42, 42)
+Waypoint_14 =  CPos.New(33, 94)
+Waypoint_15 =  CPos.New(35, 88)
+Waypoint_16 =  CPos.New(38, 91)
+Waypoint_17 =  CPos.New(30, 88)
+Waypoint_18 =  CPos.New(30, 97)
+Waypoint_19 =  CPos.New(82, 77)
+Waypoint_20 =  CPos.New(100, 67)
+Waypoint_21 =  CPos.New(95, 83)
+Waypoint_22 =  CPos.New(37, 94)
+Waypoint_23 =  CPos.New(70, 61)
+Waypoint_24 =  CPos.New(57, 91)
+Waypoint_25 =  CPos.New(31, 44)
+Waypoint_26 =  CPos.New(32, 52)
+Waypoint_27 =  CPos.New(81, 92)
+Waypoint_49 =  CPos.New(26, 84)
+Waypoint_51 =  CPos.New(78, 87)
+Waypoint_73 =  CPos.New(31, 55)
+Waypoint_74 =  CPos.New(34, 55)
+Waypoint_75 =  CPos.New(81, 96)
+Waypoint_76 =  CPos.New(88, 91)
+Waypoint_77 =  CPos.New(78, 96)
+Waypoint_96 =  CPos.New(91, 78)
+Waypoint_98 =  CPos.New(51, 72)
+Waypoint_99 =  CPos.New(79, 70)
 
 
 TeamType_start={"shok","shok","shok","shok","shok","badr"}
-TeamType_start_Reinforce = function()
-	OrderIndex_start=0
-	local Local_TeamType_start={"shok","shok","shok","shok","shok"}
-	local Local_EntryPoint=CPos.New(0, 0)
-	local Local_UnloadPoint=CPos.New(51, 72)
-	local Local_ExitPoint=CPos.New(0, 0)
-	TeamInstance_start=Reinforcements.ReinforceWithTransport(ussr,"badr", Local_TeamType_start,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
-end
-
 TeamType_civ={"c1","c2","c3","c4","c5"}
-TeamType_civ_Reinforce = function()
-	OrderIndex_civ=0
-	local TeamInstance_civ=Reinforcements.Reinforce(spain, TeamType_civ,{CPos.New(80, 45)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ=OrderIndex_civ+1
-		end)
-	end)
-end
-
 TeamType_civ0={"c1","c2","c3","c4"}
-TeamType_civ0_Reinforce = function()
-	OrderIndex_civ0=0
-	local TeamInstance_civ0=Reinforcements.Reinforce(spain, TeamType_civ0,{CPos.New(84, 42)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ0, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ0 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ0=OrderIndex_civ0+1
-		end)
-	end)
-end
-
 TeamType_civ1={"c1","c2","c3"}
-TeamType_civ1_Reinforce = function()
-	OrderIndex_civ1=0
-	local TeamInstance_civ1=Reinforcements.Reinforce(spain, TeamType_civ1,{CPos.New(80, 41)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ1, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ1 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ1=OrderIndex_civ1+1
-		end)
-	end)
-end
-
 TeamType_civ2={"c1","c2"}
-TeamType_civ2_Reinforce = function()
-	OrderIndex_civ2=0
-	local TeamInstance_civ2=Reinforcements.Reinforce(spain, TeamType_civ2,{CPos.New(86, 46)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ2, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ2 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ2=OrderIndex_civ2+1
-		end)
-	end)
-end
-
 TeamType_civ3={"c1"}
-TeamType_civ3_Reinforce = function()
-	OrderIndex_civ3=0
-	local TeamInstance_civ3=Reinforcements.Reinforce(spain, TeamType_civ3,{CPos.New(76, 42)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ3, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ3 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ3=OrderIndex_civ3+1
-		end)
-	end)
-end
-
 TeamType_civ4={"c9"}
-TeamType_civ4_Reinforce = function()
-	OrderIndex_civ4=0
-	local TeamInstance_civ4=Reinforcements.Reinforce(spain, TeamType_civ4,{CPos.New(82, 47)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ4, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ4 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ4=OrderIndex_civ4+1
-		end)
-	end)
-end
-
 TeamType_civ5={"c8","c9"}
-TeamType_civ5_Reinforce = function()
-	OrderIndex_civ5=0
-	local TeamInstance_civ5=Reinforcements.Reinforce(spain, TeamType_civ5,{CPos.New(85, 50)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ5, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ5 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ5=OrderIndex_civ5+1
-		end)
-	end)
-end
-
 TeamType_civ6={"c7","c8","c9"}
-TeamType_civ6_Reinforce = function()
-	OrderIndex_civ6=0
-	local TeamInstance_civ6=Reinforcements.Reinforce(spain, TeamType_civ6,{CPos.New(81, 50)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ6, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ6 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ6=OrderIndex_civ6+1
-		end)
-	end)
-end
-
 TeamType_civ7={"c6","c7","c8","c9"}
-TeamType_civ7_Reinforce = function()
-	OrderIndex_civ7=0
-	local TeamInstance_civ7=Reinforcements.Reinforce(spain, TeamType_civ7,{CPos.New(78, 44)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civ7, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civ7 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civ7=OrderIndex_civ7+1
-		end)
-	end)
-end
-
 TeamType_badger={"badr"}
-TeamType_badger_Reinforce = function()
-	OrderIndex_badger=0
-end
-
 TeamType_back={"e6","e6","e6","v2rl","dtrk","lst"}
-TeamType_back_Reinforce = function()
-	OrderIndex_back=0
-	local Local_TeamType_back={"e6","e6","e6","v2rl","dtrk"}
-	local Local_EntryPoint=CPos.New(73, 41)
-	local Local_UnloadPoint=CPos.New(73, 41)
-	local Local_ExitPoint=CPos.New(0,0)
-	TeamInstance_back=Reinforcements.ReinforceWithTransport(ussr,"lst", Local_TeamType_back,{Local_EntryPoint,WaypointUnload}, {Local_ExitPoint})
-end
-
 TeamType_trap={"e1","e1","e3","e3","e3"}
-TeamType_trap_Reinforce = function()
-	OrderIndex_trap=0
-	local TeamInstance_trap=Reinforcements.Reinforce(greece, TeamType_trap,{CPos.New(29, 93)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_trap, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_trap == 0 then
-				--Order:Attack
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_trap=OrderIndex_trap+1
-		end)
-	end)
-end
-
 TeamType_civv={"c1","c2","c3","c4","c5"}
-TeamType_civv_Reinforce = function()
-	OrderIndex_civv=0
-	local TeamInstance_civv=Reinforcements.Reinforce(spain, TeamType_civv,{CPos.New(29, 93)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civv, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civv == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civv=OrderIndex_civv+1
-		end)
-	end)
-end
-
 TeamType_civa={"c4","c5","c6","c7"}
-TeamType_civa_Reinforce = function()
-	OrderIndex_civa=0
-	local TeamInstance_civa=Reinforcements.Reinforce(spain, TeamType_civa,{CPos.New(33, 92)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civa, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civa == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civa=OrderIndex_civa+1
-		end)
-	end)
-end
-
 TeamType_civb={"c2","c3","c4"}
-TeamType_civb_Reinforce = function()
-	OrderIndex_civb=0
-	local TeamInstance_civb=Reinforcements.Reinforce(spain, TeamType_civb,{CPos.New(42, 42)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civb, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civb == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civb=OrderIndex_civb+1
-		end)
-	end)
-end
-
 TeamType_civc={"c5","c6"}
-TeamType_civc_Reinforce = function()
-	OrderIndex_civc=0
-	local TeamInstance_civc=Reinforcements.Reinforce(spain, TeamType_civc,{CPos.New(33, 94)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civc, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civc == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civc=OrderIndex_civc+1
-		end)
-	end)
-end
-
 TeamType_civd={"c3"}
-TeamType_civd_Reinforce = function()
-	OrderIndex_civd=0
-	local TeamInstance_civd=Reinforcements.Reinforce(spain, TeamType_civd,{CPos.New(35, 88)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civd, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civd == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civd=OrderIndex_civd+1
-		end)
-	end)
-end
-
 TeamType_cive={"c3","c4"}
-TeamType_cive_Reinforce = function()
-	OrderIndex_cive=0
-	local TeamInstance_cive=Reinforcements.Reinforce(spain, TeamType_cive,{CPos.New(38, 91)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_cive, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_cive == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_cive=OrderIndex_cive+1
-		end)
-	end)
-end
-
 TeamType_civf={"c3","c4","c5"}
-TeamType_civf_Reinforce = function()
-	OrderIndex_civf=0
-	local TeamInstance_civf=Reinforcements.Reinforce(spain, TeamType_civf,{CPos.New(30, 88)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_civf, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_civf == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(32, 52))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_civf=OrderIndex_civf+1
-		end)
-	end)
-end
-
 TeamType_reinf={"3tnk","ttnk","ttnk","ttnk","dtrk","lst"}
-TeamType_reinf_Reinforce = function()
-	OrderIndex_reinf=0
-	local Local_TeamType_reinf={"3tnk","ttnk","ttnk","ttnk","dtrk"}
-	local Local_EntryPoint=CPos.New(42, 42)
-	local Local_UnloadPoint=CPos.New(42, 42)
-	local Local_ExitPoint=CPos.New(0,0)
-	TeamInstance_reinf=Reinforcements.ReinforceWithTransport(ussr,"lst", Local_TeamType_reinf,{Local_EntryPoint,WaypointUnload}, {Local_ExitPoint})
-end
-
 TeamType_help={"shok","shok","shok","shok","shok","tran"}
-TeamType_help_Reinforce = function()
-	OrderIndex_help=0
-	local Local_TeamType_help={"shok","shok","shok","shok","shok"}
-	local Local_EntryPoint=CPos.New(82, 77)
-	local Local_UnloadPoint=CPos.New(82, 77)
-	local Local_ExitPoint=CPos.New(0, 0)
-	TeamInstance_help=Reinforcements.ReinforceWithTransport(ussr,"tran", Local_TeamType_help,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
-end
-
 TeamType_help0={"shok","shok","shok","ttnk","ttnk","lst"}
-TeamType_help0_Reinforce = function()
-	OrderIndex_help0=0
-	local Local_TeamType_help0={"shok","shok","shok","ttnk","ttnk"}
-	local Local_EntryPoint=CPos.New(100, 67)
-	local Local_UnloadPoint=CPos.New(91, 78)
-	local Local_ExitPoint=CPos.New(0,0)
-	TeamInstance_help0=Reinforcements.ReinforceWithTransport(ussr,"lst", Local_TeamType_help0,{Local_EntryPoint,WaypointUnload}, {Local_ExitPoint})
-end
-
 TeamType_msubs={"msub","msub"}
-TeamType_msubs_Reinforce = function()
-	OrderIndex_msubs=0
-	local TeamInstance_msubs=Reinforcements.Reinforce(ussr, TeamType_msubs,{CPos.New(100, 67)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_msubs, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_msubs == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(95, 83))
-			elseif OrderIndex_msubs == 1 then
-				--Order:Attack
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:2
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_msubs=OrderIndex_msubs+1
-		end)
-	end)
-end
-
 TeamType_lone={"c1","c2","c3"}
-TeamType_lone_Reinforce = function()
-	OrderIndex_lone=0
-	local TeamInstance_lone=Reinforcements.Reinforce(spain, TeamType_lone,{CPos.New(57, 91)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_lone, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_lone == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_lone=OrderIndex_lone+1
-		end)
-	end)
-end
-
 TeamType_lone0={"c5","c6","c7"}
-TeamType_lone0_Reinforce = function()
-	OrderIndex_lone0=0
-	local TeamInstance_lone0=Reinforcements.Reinforce(spain, TeamType_lone0,{CPos.New(70, 61)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_lone0, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_lone0 == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(81, 92))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_lone0=OrderIndex_lone0+1
-		end)
-	end)
-end
-
 TeamType_rein0={"shok","shok","shok","shok","shok","tran"}
-TeamType_rein0_Reinforce = function()
-	OrderIndex_rein0=0
-	local Local_TeamType_rein0={"shok","shok","shok","shok","shok"}
-	local Local_EntryPoint=CPos.New(31, 44)
-	local Local_UnloadPoint=CPos.New(31, 44)
-	local Local_ExitPoint=CPos.New(0, 0)
-	TeamInstance_rein0=Reinforcements.ReinforceWithTransport(ussr,"tran", Local_TeamType_rein0,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
-end
-
 TeamType_run={"c1","c2","c3","c4","c5"}
-TeamType_run_Reinforce = function()
-	OrderIndex_run=0
-end
-
 TeamType_help1={"shok","shok","shok","shok","shok","tran"}
-TeamType_help1_Reinforce = function()
-	OrderIndex_help1=0
-	local Local_TeamType_help1={"shok","shok","shok","shok","shok"}
-	local Local_EntryPoint=CPos.New(37, 94)
-	local Local_UnloadPoint=CPos.New(37, 94)
-	local Local_ExitPoint=CPos.New(0, 0)
-	TeamInstance_help1=Reinforcements.ReinforceWithTransport(ussr,"tran", Local_TeamType_help1,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
-end
-
 TeamType_badge0={"badr"}
-TeamType_badge0_Reinforce = function()
-	OrderIndex_badge0=0
-	local TeamInstance_badge0=Reinforcements.Reinforce(ussr, TeamType_badge0,{CPos.New(26, 84)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_badge0, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_badge0 == 0 then
-				--Order:Attack_Waypoint
-				Act.AttackMove(CPos.New(78, 87))
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_badge0=OrderIndex_badge0+1
-		end)
-	end)
-end
-
 TeamType_opdef={"e1"}
-TeamType_opdef_Reinforce = function()
-	OrderIndex_opdef=0
-	local TeamInstance_opdef=Reinforcements.Reinforce(greece, TeamType_opdef,{CPos.New(31, 55)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_opdef, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_opdef == 0 then
-				--Order:Attack
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_opdef=OrderIndex_opdef+1
-		end)
-	end)
-end
-
 TeamType_opdef0={"e3"}
-TeamType_opdef0_Reinforce = function()
-	OrderIndex_opdef0=0
-	local TeamInstance_opdef0=Reinforcements.Reinforce(greece, TeamType_opdef0,{CPos.New(34, 55)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_opdef0, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_opdef0 == 0 then
-				--Order:Do_this
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_opdef0=OrderIndex_opdef0+1
-		end)
-	end)
-end
-
 TeamType_outp={"e1","e1"}
-TeamType_outp_Produce = function()
+TeamType_outp_Autocreate = function()
 	OrderIndex_outp=0
-	goodguy.Build(TeamType_outp, function(tTeamInstance_outp)
-		Utils.Do(tTeamInstance_outp, function(Act)
+	goodguy.Build(TeamType_outp, function(TeamInstance_outp)
+		Utils.Do(TeamInstance_outp, function(Act)
 			Trigger.OnIdle(Act, function()
 				if OrderIndex_outp == 0 then
 					--Order:Do_this
@@ -566,69 +101,14 @@ TeamType_outp_Produce = function()
 	end)
 end
 
-TeamType_outp_Reinforce = function()
-	OrderIndex_outp=0
-end
-
 TeamType_wav1={"e1"}
-TeamType_wav1_Reinforce = function()
-	OrderIndex_wav1=0
-	local TeamInstance_wav1=Reinforcements.Reinforce(greece, TeamType_wav1,{CPos.New(78, 96)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_wav1, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_wav1 == 0 then
-				--Order:Do_this
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_wav1=OrderIndex_wav1+1
-		end)
-	end)
-end
-
 TeamType_wav2={"e3"}
-TeamType_wav2_Reinforce = function()
-	OrderIndex_wav2=0
-	local TeamInstance_wav2=Reinforcements.Reinforce(greece, TeamType_wav2,{CPos.New(81, 96)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_wav2, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_wav2 == 0 then
-				--Order:Do_this
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_wav2=OrderIndex_wav2+1
-		end)
-	end)
-end
-
 TeamType_wav3={"1tnk","jeep"}
-TeamType_wav3_Reinforce = function()
-	OrderIndex_wav3=0
-	local TeamInstance_wav3=Reinforcements.Reinforce(greece, TeamType_wav3,{CPos.New(88, 91)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_wav3, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_wav3 == 0 then
-				--Order:Do_this
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:1
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_wav3=OrderIndex_wav3+1
-		end)
-	end)
-end
-
 TeamType_auto={"e1","e1"}
-TeamType_auto_Produce = function()
+TeamType_auto_Autocreate = function()
 	OrderIndex_auto=0
-	greece.Build(TeamType_auto, function(tTeamInstance_auto)
-		Utils.Do(tTeamInstance_auto, function(Act)
+	greece.Build(TeamType_auto, function(TeamInstance_auto)
+		Utils.Do(TeamInstance_auto, function(Act)
 			Trigger.OnIdle(Act, function()
 				if OrderIndex_auto == 0 then
 					--Order:Do_this
@@ -643,15 +123,11 @@ TeamType_auto_Produce = function()
 	end)
 end
 
-TeamType_auto_Reinforce = function()
-	OrderIndex_auto=0
-end
-
 TeamType_auto0={"1tnk"}
-TeamType_auto0_Produce = function()
+TeamType_auto0_Autocreate = function()
 	OrderIndex_auto0=0
-	greece.Build(TeamType_auto0, function(tTeamInstance_auto0)
-		Utils.Do(tTeamInstance_auto0, function(Act)
+	greece.Build(TeamType_auto0, function(TeamInstance_auto0)
+		Utils.Do(TeamInstance_auto0, function(Act)
 			Trigger.OnIdle(Act, function()
 				if OrderIndex_auto0 == 0 then
 					--Order:Do_this
@@ -666,15 +142,11 @@ TeamType_auto0_Produce = function()
 	end)
 end
 
-TeamType_auto0_Reinforce = function()
-	OrderIndex_auto0=0
-end
-
 TeamType_auto1={"jeep"}
-TeamType_auto1_Produce = function()
+TeamType_auto1_Autocreate = function()
 	OrderIndex_auto1=0
-	greece.Build(TeamType_auto1, function(tTeamInstance_auto1)
-		Utils.Do(tTeamInstance_auto1, function(Act)
+	greece.Build(TeamType_auto1, function(TeamInstance_auto1)
+		Utils.Do(TeamInstance_auto1, function(Act)
 			Trigger.OnIdle(Act, function()
 				if OrderIndex_auto1 == 0 then
 					--Order:Do_this
@@ -689,39 +161,25 @@ TeamType_auto1_Produce = function()
 	end)
 end
 
-TeamType_auto1_Reinforce = function()
-	OrderIndex_auto1=0
-end
-
 TeamType_dest={"dd","dd","dd","dd"}
-TeamType_dest_Reinforce = function()
-	OrderIndex_dest=0
-	local TeamInstance_dest=Reinforcements.Reinforce(multi2, TeamType_dest,{CPos.New(100, 67)}, DateTime.Seconds(0))
-	Utils.Do(TeamInstance_dest, function(Act)
-		Trigger.OnIdle(Act, function()
-			if OrderIndex_dest == 0 then
-				--Order:Move_to_waypoint
-				Act.Move(CPos.New(95, 83))
-			elseif OrderIndex_dest == 1 then
-				--Order:Do_this
-				Trigger.ClearAll(Act)
-			else
-				--OrderCnt:2
-				Trigger.ClearAll(Act)
-			end
-			OrderIndex_dest=OrderIndex_dest+1
-		end)
-	end)
-end
-
 
 
 Trigger_strt_Action1=function()
-	TeamType_start_Reinforce()
+	OrderIndex_strt_start=0
+	local Local_TeamType_start={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(0, 0)
+	local Local_UnloadPoint=CPos.New(51, 72)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_start=Reinforcements.ReinforceWithTransport(ussr,"badr", Local_TeamType_start,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_strt_Action2=function()
-	TeamType_start_Reinforce()
+	OrderIndex_strt_start=0
+	local Local_TeamType_start={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(0, 0)
+	local Local_UnloadPoint=CPos.New(51, 72)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_start=Reinforcements.ReinforceWithTransport(ussr,"badr", Local_TeamType_start,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_strt_Action=function()
@@ -749,7 +207,20 @@ Trigger_strt_Event1_Tick=function()
 end
 
 Trigger_civ_Action1=function()
-	TeamType_civ_Reinforce()
+	OrderIndex_civ_civ=0
+	local TeamInstance_civ=Reinforcements.Reinforce(spain, TeamType_civ,{Waypoint_1}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ_civ == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ_civ=OrderIndex_civ_civ+1
+		end)
+	end)
 end
 
 Trigger_civ_Action2=function()
@@ -783,11 +254,37 @@ Trigger_civ_Event1_Tick=function()
 end
 
 Trigger_civ0_Action1=function()
-	TeamType_civ0_Reinforce()
+	OrderIndex_civ0_civ0=0
+	local TeamInstance_civ0=Reinforcements.Reinforce(spain, TeamType_civ0,{Waypoint_2}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ0, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ0_civ0 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ0_civ0=OrderIndex_civ0_civ0+1
+		end)
+	end)
 end
 
 Trigger_civ0_Action2=function()
-	TeamType_civ1_Reinforce()
+	OrderIndex_civ0_civ1=0
+	local TeamInstance_civ1=Reinforcements.Reinforce(spain, TeamType_civ1,{Waypoint_3}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ1, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ0_civ1 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ0_civ1=OrderIndex_civ0_civ1+1
+		end)
+	end)
 end
 
 Trigger_civ0_Action=function()
@@ -825,11 +322,37 @@ Trigger_civ0_Event2_Tick=function()
 end
 
 Trigger_civ1_Action1=function()
-	TeamType_civ2_Reinforce()
+	OrderIndex_civ1_civ2=0
+	local TeamInstance_civ2=Reinforcements.Reinforce(spain, TeamType_civ2,{Waypoint_4}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ2, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ1_civ2 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ1_civ2=OrderIndex_civ1_civ2+1
+		end)
+	end)
 end
 
 Trigger_civ1_Action2=function()
-	TeamType_civ3_Reinforce()
+	OrderIndex_civ1_civ3=0
+	local TeamInstance_civ3=Reinforcements.Reinforce(spain, TeamType_civ3,{Waypoint_5}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ3, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ1_civ3 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ1_civ3=OrderIndex_civ1_civ3+1
+		end)
+	end)
 end
 
 Trigger_civ1_Action=function()
@@ -867,11 +390,37 @@ Trigger_civ1_Event2_Tick=function()
 end
 
 Trigger_civ2_Action1=function()
-	TeamType_civ4_Reinforce()
+	OrderIndex_civ2_civ4=0
+	local TeamInstance_civ4=Reinforcements.Reinforce(spain, TeamType_civ4,{Waypoint_6}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ4, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ2_civ4 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ2_civ4=OrderIndex_civ2_civ4+1
+		end)
+	end)
 end
 
 Trigger_civ2_Action2=function()
-	TeamType_civ5_Reinforce()
+	OrderIndex_civ2_civ5=0
+	local TeamInstance_civ5=Reinforcements.Reinforce(spain, TeamType_civ5,{Waypoint_7}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ5, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ2_civ5 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ2_civ5=OrderIndex_civ2_civ5+1
+		end)
+	end)
 end
 
 Trigger_civ2_Action=function()
@@ -909,11 +458,37 @@ Trigger_civ2_Event2_Tick=function()
 end
 
 Trigger_civ3_Action1=function()
-	TeamType_civ6_Reinforce()
+	OrderIndex_civ3_civ6=0
+	local TeamInstance_civ6=Reinforcements.Reinforce(spain, TeamType_civ6,{Waypoint_8}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ6, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ3_civ6 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ3_civ6=OrderIndex_civ3_civ6+1
+		end)
+	end)
 end
 
 Trigger_civ3_Action2=function()
-	TeamType_civ7_Reinforce()
+	OrderIndex_civ3_civ7=0
+	local TeamInstance_civ7=Reinforcements.Reinforce(spain, TeamType_civ7,{Waypoint_9}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civ7, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civ3_civ7 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civ3_civ7=OrderIndex_civ3_civ7+1
+		end)
+	end)
 end
 
 Trigger_civ3_Action=function()
@@ -954,7 +529,7 @@ Trigger_bdgr_Action1=function()
 end
 
 Trigger_bdgr_Action2=function()
-	TeamType_badger_Reinforce()
+	OrderIndex_bdgr_badger=0
 end
 
 Trigger_bdgr_Action=function()
@@ -982,7 +557,12 @@ Trigger_bdgr_Event1_Tick=function()
 end
 
 Trigger_back_Action1=function()
-	TeamType_back_Reinforce()
+	OrderIndex_back_back=0
+	local Local_TeamType_back={"e6","e6","e6","v2rl","dtrk"}
+	local Local_EntryPoint=CPos.New(73, 41)
+	local Local_UnloadPoint=CPos.New(73, 41)
+	local Local_ExitPoint=CPos.New(0,0)
+	local TeamInstance_back=Reinforcements.ReinforceWithTransport(ussr,"lst", Local_TeamType_back,{Local_EntryPoint,WaypointUnload}, {Local_ExitPoint})
 end
 
 Trigger_back_Action2=function()
@@ -1004,7 +584,7 @@ Trigger_back_Logic=function()
 end
 
 Trigger_back_Event1_Setup=function()
-	local Local_TriggerTeam_back={Actor_Structure_8,Actor_Structure_9,Actor_Structure_11,Actor_Structure_12,Actor_Structure_13,Actor_Structure_14,Actor_Structure_15,Actor_Structure_16,Actor_Structure_17}
+	local Local_TriggerTeam_back={Actor87,Actor88,Actor90,Actor91,Actor92,Actor93,Actor94,Actor95,Actor96}
 	Trigger.OnAnyKilled(Local_TriggerTeam_back,function()
 		Trigger_back_Event1_Flag = 1
 		Trigger_back_Logic()
@@ -1059,11 +639,37 @@ Trigger_civv_Event2_Tick=function()
 end
 
 Trigger_civa_Action1=function()
-	TeamType_civa_Reinforce()
+	OrderIndex_civa_civa=0
+	local TeamInstance_civa=Reinforcements.Reinforce(spain, TeamType_civa,{Waypoint_12}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civa, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civa_civa == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civa_civa=OrderIndex_civa_civa+1
+		end)
+	end)
 end
 
 Trigger_civa_Action2=function()
-	TeamType_civb_Reinforce()
+	OrderIndex_civa_civb=0
+	local TeamInstance_civb=Reinforcements.Reinforce(spain, TeamType_civb,{Waypoint_13}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civb, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civa_civb == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civa_civb=OrderIndex_civa_civb+1
+		end)
+	end)
 end
 
 Trigger_civa_Action=function()
@@ -1101,11 +707,37 @@ Trigger_civa_Event2_Tick=function()
 end
 
 Trigger_civb_Action1=function()
-	TeamType_civc_Reinforce()
+	OrderIndex_civb_civc=0
+	local TeamInstance_civc=Reinforcements.Reinforce(spain, TeamType_civc,{Waypoint_14}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civc, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civb_civc == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civb_civc=OrderIndex_civb_civc+1
+		end)
+	end)
 end
 
 Trigger_civb_Action2=function()
-	TeamType_civd_Reinforce()
+	OrderIndex_civb_civd=0
+	local TeamInstance_civd=Reinforcements.Reinforce(spain, TeamType_civd,{Waypoint_15}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civd, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civb_civd == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civb_civd=OrderIndex_civb_civd+1
+		end)
+	end)
 end
 
 Trigger_civb_Action=function()
@@ -1143,11 +775,37 @@ Trigger_civb_Event2_Tick=function()
 end
 
 Trigger_civc_Action1=function()
-	TeamType_cive_Reinforce()
+	OrderIndex_civc_cive=0
+	local TeamInstance_cive=Reinforcements.Reinforce(spain, TeamType_cive,{Waypoint_16}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_cive, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civc_cive == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civc_cive=OrderIndex_civc_cive+1
+		end)
+	end)
 end
 
 Trigger_civc_Action2=function()
-	TeamType_civf_Reinforce()
+	OrderIndex_civc_civf=0
+	local TeamInstance_civf=Reinforcements.Reinforce(spain, TeamType_civf,{Waypoint_17}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civf, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civc_civf == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_26)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civc_civf=OrderIndex_civc_civf+1
+		end)
+	end)
 end
 
 Trigger_civc_Action=function()
@@ -1185,11 +843,21 @@ Trigger_civc_Event2_Tick=function()
 end
 
 Trigger_help_Action1=function()
-	TeamType_start_Reinforce()
+	OrderIndex_help_start=0
+	local Local_TeamType_start={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(0, 0)
+	local Local_UnloadPoint=CPos.New(51, 72)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_start=Reinforcements.ReinforceWithTransport(ussr,"badr", Local_TeamType_start,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_help_Action2=function()
-	TeamType_start_Reinforce()
+	OrderIndex_help_start=0
+	local Local_TeamType_start={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(0, 0)
+	local Local_UnloadPoint=CPos.New(51, 72)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_start=Reinforcements.ReinforceWithTransport(ussr,"badr", Local_TeamType_start,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_help_Action=function()
@@ -1213,11 +881,21 @@ Trigger_help_Event1_Tick=function()
 end
 
 Trigger_rein_Action1=function()
-	TeamType_reinf_Reinforce()
+	OrderIndex_rein_reinf=0
+	local Local_TeamType_reinf={"3tnk","ttnk","ttnk","ttnk","dtrk"}
+	local Local_EntryPoint=CPos.New(42, 42)
+	local Local_UnloadPoint=CPos.New(42, 42)
+	local Local_ExitPoint=CPos.New(0,0)
+	local TeamInstance_reinf=Reinforcements.ReinforceWithTransport(ussr,"lst", Local_TeamType_reinf,{Local_EntryPoint,WaypointUnload}, {Local_ExitPoint})
 end
 
 Trigger_rein_Action2=function()
-	TeamType_rein0_Reinforce()
+	OrderIndex_rein_rein0=0
+	local Local_TeamType_rein0={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(31, 44)
+	local Local_UnloadPoint=CPos.New(31, 44)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_rein0=Reinforcements.ReinforceWithTransport(ussr,"tran", Local_TeamType_rein0,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_rein_Action=function()
@@ -1238,7 +916,7 @@ Trigger_rein_Logic=function()
 end
 
 Trigger_rein_Event1_Setup=function()
-	Trigger.OnCapture(Actor_Structure_52,function(self, captor, oldOwner, newOwner)
+	Trigger.OnCapture(Actor131,function(self, captor, oldOwner, newOwner)
 		if newOwner == ussr then
 			Trigger_rein_Event1_Flag = 1
 			Trigger_rein_Logic()
@@ -1250,7 +928,7 @@ Trigger_rein_Event1_Tick=function()
 end
 
 Trigger_rein_Event2_Setup=function()
-	local Local_TriggerTeam_rein={Actor_Structure_52}
+	local Local_TriggerTeam_rein={Actor131}
 	Trigger.OnAnyKilled(Local_TriggerTeam_rein,function()
 		Trigger_rein_Event2_Flag = 1
 		Trigger_rein_Logic()
@@ -1330,11 +1008,21 @@ Trigger_lose_Event2_Tick=function()
 end
 
 Trigger_hel0_Action1=function()
-	TeamType_help_Reinforce()
+	OrderIndex_hel0_help=0
+	local Local_TeamType_help={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(82, 77)
+	local Local_UnloadPoint=CPos.New(82, 77)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_help=Reinforcements.ReinforceWithTransport(ussr,"tran", Local_TeamType_help,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_hel0_Action2=function()
-	TeamType_help0_Reinforce()
+	OrderIndex_hel0_help0=0
+	local Local_TeamType_help0={"shok","shok","shok","ttnk","ttnk"}
+	local Local_EntryPoint=CPos.New(100, 67)
+	local Local_UnloadPoint=CPos.New(91, 78)
+	local Local_ExitPoint=CPos.New(0,0)
+	local TeamInstance_help0=Reinforcements.ReinforceWithTransport(ussr,"lst", Local_TeamType_help0,{Local_EntryPoint,WaypointUnload}, {Local_ExitPoint})
 end
 
 Trigger_hel0_Action=function()
@@ -1362,7 +1050,23 @@ Trigger_hel0_Event1_Tick=function()
 end
 
 Trigger_msub_Action1=function()
-	TeamType_msubs_Reinforce()
+	OrderIndex_msub_msubs=0
+	local TeamInstance_msubs=Reinforcements.Reinforce(ussr, TeamType_msubs,{Waypoint_20}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_msubs, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_msub_msubs == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_21)
+			elseif OrderIndex_msub_msubs == 1 then
+				--Order:Attack
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:2
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_msub_msubs=OrderIndex_msub_msubs+1
+		end)
+	end)
 end
 
 Trigger_msub_Action2=function()
@@ -1403,7 +1107,20 @@ Trigger_msub_Event2_Tick=function()
 end
 
 Trigger_lone_Action1=function()
-	TeamType_lone_Reinforce()
+	OrderIndex_lone_lone=0
+	local TeamInstance_lone=Reinforcements.Reinforce(spain, TeamType_lone,{Waypoint_24}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_lone, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_lone_lone == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_lone_lone=OrderIndex_lone_lone+1
+		end)
+	end)
 end
 
 Trigger_lone_Action2=function()
@@ -1430,7 +1147,20 @@ Trigger_lone_Event1_Tick=function()
 end
 
 Trigger_lon0_Action1=function()
-	TeamType_lone0_Reinforce()
+	OrderIndex_lon0_lone0=0
+	local TeamInstance_lone0=Reinforcements.Reinforce(spain, TeamType_lone0,{Waypoint_23}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_lone0, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_lon0_lone0 == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_lon0_lone0=OrderIndex_lon0_lone0+1
+		end)
+	end)
 end
 
 Trigger_lon0_Action2=function()
@@ -1484,11 +1214,29 @@ Trigger_hel_Event1_Tick=function()
 end
 
 Trigger_civd_Action1=function()
-	TeamType_civv_Reinforce()
+	OrderIndex_civd_civv=0
+	local TeamInstance_civv=Reinforcements.Reinforce(spain, TeamType_civv,{Waypoint_11}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_civv, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_civd_civv == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_27)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_civd_civv=OrderIndex_civd_civv+1
+		end)
+	end)
 end
 
 Trigger_civd_Action2=function()
-	TeamType_help1_Reinforce()
+	OrderIndex_civd_help1=0
+	local Local_TeamType_help1={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(37, 94)
+	local Local_UnloadPoint=CPos.New(37, 94)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_help1=Reinforcements.ReinforceWithTransport(ussr,"tran", Local_TeamType_help1,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_civd_Action=function()
@@ -1526,6 +1274,21 @@ Trigger_civd_Event2_Tick=function()
 end
 
 Trigger_run_Action1=function()
+	OrderIndex_run=0
+	spain.Build(TeamType_run, function(TeamInstance_run)
+		Utils.Do(TeamInstance_run, function(Act)
+			Trigger.OnIdle(Act, function()
+				if OrderIndex_run == 0 then
+					--Order:Move_to_waypoint
+					Act.Move(Waypoint_27)
+				else
+					--OrderCnt:1
+					Trigger.ClearAll(Act)
+				end
+				OrderIndex_run=OrderIndex_run+1
+			end)
+		end)
+	end)
 end
 
 Trigger_run_Action2=function()
@@ -1556,7 +1319,7 @@ Trigger_run_Event1_Tick=function()
 end
 
 Trigger_hel1_Action1=function()
-	TeamType_badge0_Reinforce()
+	OrderIndex_hel1_badge0=0
 end
 
 Trigger_hel1_Action2=function()
@@ -1680,7 +1443,20 @@ Trigger_ctxt_Event1_Tick=function()
 end
 
 Trigger_trap_Action1=function()
-	TeamType_trap_Reinforce()
+	OrderIndex_trap_trap=0
+	local TeamInstance_trap=Reinforcements.Reinforce(greece, TeamType_trap,{Waypoint_11}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_trap, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_trap_trap == 0 then
+				--Order:Attack
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_trap_trap=OrderIndex_trap_trap+1
+		end)
+	end)
 end
 
 Trigger_trap_Action2=function()
@@ -1711,7 +1487,12 @@ Trigger_trap_Event1_Tick=function()
 end
 
 Trigger_hel2_Action1=function()
-	TeamType_help1_Reinforce()
+	OrderIndex_hel2_help1=0
+	local Local_TeamType_help1={"shok","shok","shok","shok","shok"}
+	local Local_EntryPoint=CPos.New(37, 94)
+	local Local_UnloadPoint=CPos.New(37, 94)
+	local Local_ExitPoint=CPos.New(0, 0)
+	local TeamInstance_help1=Reinforcements.ReinforceWithTransport(ussr,"tran", Local_TeamType_help1,{Local_EntryPoint,Local_UnloadPoint}, {Local_ExitPoint})
 end
 
 Trigger_hel2_Action2=function()
@@ -1742,11 +1523,37 @@ Trigger_hel2_Event1_Tick=function()
 end
 
 Trigger_opd_Action1=function()
-	TeamType_opdef_Reinforce()
+	OrderIndex_opd_opdef=0
+	local TeamInstance_opdef=Reinforcements.Reinforce(greece, TeamType_opdef,{Waypoint_73}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_opdef, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_opd_opdef == 0 then
+				--Order:Attack
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_opd_opdef=OrderIndex_opd_opdef+1
+		end)
+	end)
 end
 
 Trigger_opd_Action2=function()
-	TeamType_opdef0_Reinforce()
+	OrderIndex_opd_opdef0=0
+	local TeamInstance_opdef0=Reinforcements.Reinforce(greece, TeamType_opdef0,{Waypoint_74}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_opdef0, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_opd_opdef0 == 0 then
+				--Order:Do_this
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_opd_opdef0=OrderIndex_opd_opdef0+1
+		end)
+	end)
 end
 
 Trigger_opd_Action=function()
@@ -1783,6 +1590,20 @@ Trigger_outp_Action1=function()
 end
 
 Trigger_outp_Action2=function()
+	local TeamInstance_wav3={Actor70,Actor73}
+	OrderIndex_wav3_outp=0
+	Utils.Do(TeamInstance_wav3, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_wav3_outp == 0 then
+				--Order:Do_this
+				Act.Hunt()
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_wav3_outp=OrderIndex_wav3_outp+1
+		end)
+	end)
 end
 
 Trigger_outp_Action=function()
@@ -1842,7 +1663,7 @@ Trigger_clr_Logic=function()
 end
 
 Trigger_clr_Event1_Setup=function()
-	local Local_TriggerTeam_clr={Actor_Structure_19,Actor_Structure_23}
+	local Local_TriggerTeam_clr={Actor98,Actor102}
 	Trigger.OnAnyKilled(Local_TriggerTeam_clr,function()
 		Trigger_clr_Event1_Flag = 1
 		Trigger_clr_Logic()
@@ -1853,8 +1674,8 @@ Trigger_clr_Event1_Tick=function()
 end
 
 Trigger_clr_Event2_Setup=function()
-	Trigger.OnCapture(Actor_Structure_19,function(self, captor, oldOwner, newOwner)
-		if newOwner == ussr then
+	Trigger.OnCapture(Actor98,function(self, captor, oldOwner, newOwner)
+		if newOwner == greece then
 			Trigger_clr_Event2_Flag = 1
 			Trigger_clr_Logic()
 		end
@@ -1932,11 +1753,37 @@ Trigger_bdef_Event2_Tick=function()
 end
 
 Trigger_bde0_Action1=function()
-	TeamType_wav2_Reinforce()
+	OrderIndex_bde0_wav2=0
+	local TeamInstance_wav2=Reinforcements.Reinforce(greece, TeamType_wav2,{Waypoint_75}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_wav2, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_bde0_wav2 == 0 then
+				--Order:Do_this
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_bde0_wav2=OrderIndex_bde0_wav2+1
+		end)
+	end)
 end
 
 Trigger_bde0_Action2=function()
-	TeamType_wav1_Reinforce()
+	OrderIndex_bde0_wav1=0
+	local TeamInstance_wav1=Reinforcements.Reinforce(greece, TeamType_wav1,{Waypoint_77}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_wav1, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_bde0_wav1 == 0 then
+				--Order:Do_this
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_bde0_wav1=OrderIndex_bde0_wav1+1
+		end)
+	end)
 end
 
 Trigger_bde0_Action=function()
@@ -1990,11 +1837,37 @@ Trigger_prod_Event1_Tick=function()
 end
 
 Trigger_attk_Action1=function()
-	TeamType_wav1_Reinforce()
+	OrderIndex_attk_wav1=0
+	local TeamInstance_wav1=Reinforcements.Reinforce(greece, TeamType_wav1,{Waypoint_77}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_wav1, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_attk_wav1 == 0 then
+				--Order:Do_this
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_attk_wav1=OrderIndex_attk_wav1+1
+		end)
+	end)
 end
 
 Trigger_attk_Action2=function()
-	TeamType_wav2_Reinforce()
+	OrderIndex_attk_wav2=0
+	local TeamInstance_wav2=Reinforcements.Reinforce(greece, TeamType_wav2,{Waypoint_75}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_wav2, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_attk_wav2 == 0 then
+				--Order:Do_this
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_attk_wav2=OrderIndex_attk_wav2+1
+		end)
+	end)
 end
 
 Trigger_attk_Action=function()
@@ -2054,6 +1927,20 @@ Trigger_pro0_Event1_Tick=function()
 end
 
 Trigger_att0_Action1=function()
+	local TeamInstance_wav3={Actor69,Actor72}
+	OrderIndex_wav3_att0=0
+	Utils.Do(TeamInstance_wav3, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_wav3_att0 == 0 then
+				--Order:Do_this
+				Act.Hunt()
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_wav3_att0=OrderIndex_wav3_att0+1
+		end)
+	end)
 end
 
 Trigger_att0_Action2=function()
@@ -2086,6 +1973,20 @@ Trigger_att0_Event1_Tick=function()
 end
 
 Trigger_att1_Action1=function()
+	local TeamInstance_wav3={Actor71,Actor74}
+	OrderIndex_wav3_att1=0
+	Utils.Do(TeamInstance_wav3, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_wav3_att1 == 0 then
+				--Order:Do_this
+				Act.Hunt()
+			else
+				--OrderCnt:1
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_wav3_att1=OrderIndex_wav3_att1+1
+		end)
+	end)
 end
 
 Trigger_att1_Action2=function()
@@ -2198,7 +2099,7 @@ Trigger_clr0_Logic=function()
 end
 
 Trigger_clr0_Event1_Setup=function()
-	local Local_TriggerTeam_clr0={Actor_Structure_18,Actor_Structure_24}
+	local Local_TriggerTeam_clr0={Actor97,Actor103}
 	Trigger.OnAnyKilled(Local_TriggerTeam_clr0,function()
 		Trigger_clr0_Event1_Flag = 1
 		Trigger_clr0_Logic()
@@ -2209,7 +2110,7 @@ Trigger_clr0_Event1_Tick=function()
 end
 
 Trigger_clr0_Event2_Setup=function()
-	Trigger.OnCapture(Actor_Structure_18,function(self, captor, oldOwner, newOwner)
+	Trigger.OnCapture(Actor97,function(self, captor, oldOwner, newOwner)
 		if newOwner == ussr then
 			Trigger_clr0_Event2_Flag = 1
 			Trigger_clr0_Logic()
@@ -2221,7 +2122,23 @@ Trigger_clr0_Event2_Tick=function()
 end
 
 Trigger_dest_Action1=function()
-	TeamType_dest_Reinforce()
+	OrderIndex_dest_dest=0
+	local TeamInstance_dest=Reinforcements.Reinforce(multi2, TeamType_dest,{Waypoint_20}, DateTime.Seconds(0))
+	Utils.Do(TeamInstance_dest, function(Act)
+		Trigger.OnIdle(Act, function()
+			if OrderIndex_dest_dest == 0 then
+				--Order:Move_to_waypoint
+				Act.Move(Waypoint_21)
+			elseif OrderIndex_dest_dest == 1 then
+				--Order:Do_this
+				Trigger.ClearAll(Act)
+			else
+				--OrderCnt:2
+				Trigger.ClearAll(Act)
+			end
+			OrderIndex_dest_dest=OrderIndex_dest_dest+1
+		end)
+	end)
 end
 
 Trigger_dest_Action2=function()
@@ -2354,7 +2271,7 @@ Trigger_pill_Logic=function()
 end
 
 Trigger_pill_Event1_Setup=function()
-	local Local_TriggerTeam_pill={Actor_Structure_62,Actor_Structure_63}
+	local Local_TriggerTeam_pill={Actor141,Actor142}
 	Trigger.OnAnyKilled(Local_TriggerTeam_pill,function()
 		Trigger_pill_Event1_Flag = 1
 		Trigger_pill_Logic()

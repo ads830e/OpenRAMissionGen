@@ -13,7 +13,7 @@ namespace OpenRAMissionGenConsole
         static void Main(string[] args)
         {
             var ini = new Ra95MissionIni();
-            if (!ini.LoadFile("scu44ea.ini"))
+            if (!ini.LoadFile("scu40ea.ini"))
             {
                 Console.WriteLine("Ini Paser Error!");
             }
@@ -48,30 +48,7 @@ namespace OpenRAMissionGenConsole
             return ret;
         }
 
-        private String[] DefaultCountries =
-        {
-            "Spain",
-            "Greece",
-            "USSR",
-            "England",
-            "Ukraine",
-            "Germany",
-            "France",
-            "Turkey",
-            "GoodGuy",
-            "BadGuy",
-            "Neutral",
-            "Special",
-            "Multi1",
-            "Multi2",
-            "Multi3",
-            "Multi4",
-            "Multi5",
-            "Multi6",
-            "Multi7",
-            "Multi8"
-        };
-
+        
         private String FileName = String.Empty;
         private List<IniBlock> iniBlocks = new List<IniBlock>();
 
@@ -81,12 +58,7 @@ namespace OpenRAMissionGenConsole
         public List<Ra95MissionIni_Country> Countries = new List<Ra95MissionIni_Country>();
         public List<Ra95MissionIni_Waypoint> Waypoints = new List<Ra95MissionIni_Waypoint>();
 
-        public List<Ra95MissionIni_Structure> Structures = new List<Ra95MissionIni_Structure>();
-        public List<Ra95MissionIni_Unit> Units = new List<Ra95MissionIni_Unit>();
-        public List<Ra95MissionIni_Ship> Ships = new List<Ra95MissionIni_Ship>();
-        public List<Ra95MissionIni_Infantry> Infantries = new List<Ra95MissionIni_Infantry>();
-        public List<Ra95MissionIni_Overlay> Overlays = new List<Ra95MissionIni_Overlay>();
-        public List<Ra95MissionIni_Terrain> Terrains = new List<Ra95MissionIni_Terrain>();
+        public List<Ra95MissionIni_Actor> Actors = new List<Ra95MissionIni_Actor>();
 
         public Ra95MissionIni_Map Map = new Ra95MissionIni_Map();
 
@@ -167,16 +139,9 @@ namespace OpenRAMissionGenConsole
             Countries = new List<Ra95MissionIni_Country>();
             Waypoints = new List<Ra95MissionIni_Waypoint>();
 
-            Structures = new List<Ra95MissionIni_Structure>();
-            Units = new List<Ra95MissionIni_Unit>();
-            Ships = new List<Ra95MissionIni_Ship>();
-            Infantries = new List<Ra95MissionIni_Infantry>();
-
-            Terrains = new List<Ra95MissionIni_Terrain>();
-
+            Actors = new List<Ra95MissionIni_Actor>();
+            
             Map = new Ra95MissionIni_Map();
-
-            Overlays = new List<Ra95MissionIni_Overlay>();
 
             Basic = new Ra95MissionIni_Basic();
 
@@ -312,10 +277,10 @@ namespace OpenRAMissionGenConsole
                 {
                     foreach (var inipair in iniBlock.iniPairs)
                     {
-                        var Structure = new Ra95MissionIni_Structure();
-                        if(Structure.Parse(inipair.key, inipair.value))
+                        var Structure = new Ra95MissionIni_Actor();
+                        if(Structure.ParseStructure(inipair.key, inipair.value))
                         {
-                            Structures.Add(Structure);
+                            Actors.Add(Structure);
                         }
                     }
                 }
@@ -323,10 +288,10 @@ namespace OpenRAMissionGenConsole
                 {
                     foreach (var inipair in iniBlock.iniPairs)
                     {
-                        var Ship = new Ra95MissionIni_Ship();
-                        if (Ship.Parse(inipair.key, inipair.value))
+                        var Ship = new Ra95MissionIni_Actor();
+                        if (Ship.ParseShip(inipair.key, inipair.value))
                         {
-                            Ships.Add(Ship);
+                            Actors.Add(Ship);
                         }
                     }
                 }
@@ -334,10 +299,10 @@ namespace OpenRAMissionGenConsole
                 {
                     foreach (var inipair in iniBlock.iniPairs)
                     {
-                        var Unit = new Ra95MissionIni_Unit();
-                        if (Unit.Parse(inipair.key, inipair.value))
+                        var Unit = new Ra95MissionIni_Actor();
+                        if (Unit.ParseUnit(inipair.key, inipair.value))
                         {
-                            Units.Add(Unit);
+                            Actors.Add(Unit);
                         }
                     }
                 }
@@ -345,10 +310,10 @@ namespace OpenRAMissionGenConsole
                 {
                     foreach (var inipair in iniBlock.iniPairs)
                     {
-                        var Infantry = new Ra95MissionIni_Infantry();
-                        if (Infantry.Parse(inipair.key, inipair.value))
+                        var Infantry = new Ra95MissionIni_Actor();
+                        if (Infantry.ParseInfantry(inipair.key, inipair.value))
                         {
-                            Infantries.Add(Infantry);
+                            Actors.Add(Infantry);
                         }
                     }
                 }
@@ -427,10 +392,9 @@ namespace OpenRAMissionGenConsole
                 {
                     foreach (var inipair in iniBlock.iniPairs)
                     {
-                        var Terrain = new Ra95MissionIni_Terrain();
-                        Terrain.Terrain = inipair.value;
-                        Terrain.Pos.Parse(inipair.key);
-                        Terrains.Add(Terrain);
+                        var Terrain = new Ra95MissionIni_Actor();
+                        Terrain.ParseTerrain(inipair.key, inipair.value);
+                        Actors.Add(Terrain);
 
                         //Console.WriteLine("Terrain:{0} X:{1} Y:{2}", Terrain.Terrain, Terrain.Pos.x, Terrain.Pos.y);
                     }
@@ -473,14 +437,10 @@ namespace OpenRAMissionGenConsole
                         for (int x = 0; x < mapsize; x++)
                         {
                             var o = ms.ReadByte();
-                            if (Ra95MissionIni_Overlay.IsOverlay(o))
+                            var Overlay = new Ra95MissionIni_Actor();
+                            if(Overlay.ParseOverlay(o,x,y))
                             {
-                                var Overlay = new Ra95MissionIni_Overlay();
-                                Overlay.Overlay = Ra95MissionIni_Overlay.GetOverlayName(o);
-                                Overlay.Pos.x = x;
-                                Overlay.Pos.y = y;
-
-                                if(!Overlay.IsOre()) Overlays.Add(Overlay);
+                                if (!Overlay.IsOre()) Actors.Add(Overlay);
                                 //Console.WriteLine("Overlay:{0} X:{1} Y:{2}", Ra95MissionIni_Overlay.GetOverlayName(o), x, y);
                             }
                         }
@@ -490,7 +450,12 @@ namespace OpenRAMissionGenConsole
                 }
 
             }
-            
+
+
+            for (int i = 0; i < Actors.Count; i++)
+            {
+                Actors[i].index = i;
+            }
             /*
                 Console.WriteLine("Countries Cnt:{0}", Countries.Count);
                 Console.WriteLine("CellTriggers Cnt:{0}", CellTriggers.Count);
@@ -600,7 +565,7 @@ namespace OpenRAMissionGenConsole
 
             sw_mapyaml.Write("Players:\n");
 
-            foreach(String DefaultCountry in DefaultCountries)
+            foreach(String DefaultCountry in Ra95MissionIni_Country.GetDefaultCountries())
             {
                 bool found = false;
                 foreach (var Country in Countries)
@@ -634,52 +599,45 @@ namespace OpenRAMissionGenConsole
             }
             
             sw_mapyaml.Write("\nActors:\n");
-            for(int i=0;i<Overlays.Count;i++)
-            {
-                sw_mapyaml.Write("\tActor_Overlay_{0}: {1}\n", i,Overlays[i].Overlay.ToLower());
-                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Overlays[i].Pos.x, Overlays[i].Pos.y);
-                sw_mapyaml.Write("\t\tOwner: Neutral\n");
-            }
-            for (int i = 0; i < Terrains.Count; i++)
-            {
-                sw_mapyaml.Write("\tActor_Terrain_{0}: {1}\n", i, Terrains[i].Terrain.ToLower());
-                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Terrains[i].Pos.x, Terrains[i].Pos.y);
-                sw_mapyaml.Write("\t\tOwner: Neutral\n");
-            }
-            for (int i = 0; i < Structures.Count; i++)
-            {
-                sw_mapyaml.Write("\tActor_Structure_{0}: {1}\n", Structures[i].index, Structures[i].Structure.ToLower());
-                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Structures[i].Pos.x, Structures[i].Pos.y);
-                if (Structures[i].Structure.ToLower() == "v19") sw_mapyaml.Write("\t\tOwner: Neutral\n");
-                else sw_mapyaml.Write("\t\tOwner: {0}\n", Structures[i].Owner);
-                sw_mapyaml.Write("\t\tHealth: {0}\n", Structures[i].Health * 100 / 256);
-            }
 
+            foreach(var a in Actors)
+            {
+                sw_mapyaml.Write("\tActor{0}: {1}\n", a.index, a.Type.ToLower());
+                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", a.Pos.x, a.Pos.y);
 
-            for (int i = 0; i < Units.Count; i++)
-            {
-                sw_mapyaml.Write("\tActor_Unit_{0}: {1}\n", Units[i].index, Units[i].Unit.ToLower());
-                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Units[i].Pos.x, Units[i].Pos.y);
-                sw_mapyaml.Write("\t\tOwner: {0}\n", Units[i].Owner);
-                sw_mapyaml.Write("\t\tFacing: {0}\n", Units[i].Direction);
-                sw_mapyaml.Write("\t\tHealth: {0}\n", Units[i].Health*100/256);
-            }
-            for (int i = 0; i < Ships.Count; i++)
-            {
-                sw_mapyaml.Write("\tActor_Ship_{0}: {1}\n", Ships[i].index, Ships[i].Ship.ToLower());
-                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Ships[i].Pos.x, Ships[i].Pos.y);
-                sw_mapyaml.Write("\t\tOwner: {0}\n", Ships[i].Owner);
-                sw_mapyaml.Write("\t\tFacing: {0}\n", Ships[i].Direction);
-                sw_mapyaml.Write("\t\tHealth: {0}\n", Ships[i].Health * 100 / 256);
-            }
-            for (int i = 0; i < Infantries.Count; i++)
-            {
-                sw_mapyaml.Write("\tActor_Infantry_{0}: {1}\n", Infantries[i].index, Infantries[i].Infantry.ToLower());
-                sw_mapyaml.Write("\t\tLocation: {0},{1}\n", Infantries[i].Pos.x, Infantries[i].Pos.y);
-                sw_mapyaml.Write("\t\tOwner: {0}\n", Infantries[i].Owner);
-                sw_mapyaml.Write("\t\tFacing: {0}\n", Infantries[i].Direction);
-                sw_mapyaml.Write("\t\tSubCell: {0}\n", Infantries[i].PositionInCell);
-                sw_mapyaml.Write("\t\tHealth: {0}\n", Infantries[i].Health * 100 / 256);
+                if(a.AType==Ra95MissionIni_Actor.ActorType.Overlay)
+                {
+                    sw_mapyaml.Write("\t\tOwner: Neutral\n");
+                }
+                else if (a.AType == Ra95MissionIni_Actor.ActorType.Terrain)
+                {
+                    sw_mapyaml.Write("\t\tOwner: Neutral\n");
+                }
+                else if (a.AType == Ra95MissionIni_Actor.ActorType.Structure)
+                {
+                    if (a.Type.ToLower() == "v19") sw_mapyaml.Write("\t\tOwner: Neutral\n");
+                    else sw_mapyaml.Write("\t\tOwner: {0}\n", a.Owner);
+                    sw_mapyaml.Write("\t\tHealth: {0}\n", a.Health * 100 / 256);
+                }
+                else if (a.AType == Ra95MissionIni_Actor.ActorType.Unit)
+                {
+                    sw_mapyaml.Write("\t\tOwner: {0}\n", a.Owner);
+                    sw_mapyaml.Write("\t\tFacing: {0}\n", a.Direction);
+                    sw_mapyaml.Write("\t\tHealth: {0}\n", a.Health * 100 / 256);
+                }
+                else if (a.AType == Ra95MissionIni_Actor.ActorType.Ship)
+                {
+                    sw_mapyaml.Write("\t\tOwner: {0}\n", a.Owner);
+                    sw_mapyaml.Write("\t\tFacing: {0}\n", a.Direction);
+                    sw_mapyaml.Write("\t\tHealth: {0}\n", a.Health * 100 / 256);
+                }
+                else if (a.AType == Ra95MissionIni_Actor.ActorType.Infantry)
+                {
+                    sw_mapyaml.Write("\t\tOwner: {0}\n", a.Owner);
+                    sw_mapyaml.Write("\t\tFacing: {0}\n", a.Direction);
+                    sw_mapyaml.Write("\t\tSubCell: {0}\n", a.PositionInCell);
+                    sw_mapyaml.Write("\t\tHealth: {0}\n", a.Health * 100 / 256);
+                }
             }
             
             sw_mapyaml.Write("\nRules: ra|rules/campaign-rules.yaml, ra|rules/campaign-tooltips.yaml, ra|rules/campaign-palettes.yaml, rules.yaml\n");
@@ -712,7 +670,7 @@ namespace OpenRAMissionGenConsole
 
             foreach(var Waypoint in Waypoints)
             {
-                sw_lua.Write("Waypoint_"+ Waypoint.Num.ToString()+ " =  {CPos.New(" + Waypoint.Pos.x.ToString() + ", " + Waypoint.Pos.y.ToString() + ")}\n");
+                sw_lua.Write("Waypoint_"+ Waypoint.Num.ToString()+ " =  CPos.New(" + Waypoint.Pos.x.ToString() + ", " + Waypoint.Pos.y.ToString() + ")\n");
             }
 
             sw_lua.Write("\n\n");
@@ -721,7 +679,7 @@ namespace OpenRAMissionGenConsole
             foreach (var TeamType in TeamTypes)
             {
                 GenLua_TeamTypeDeclaration(sw_lua, TeamType);
-                GenLua_TeamTypeFunctions(sw_lua, TeamType);
+                GenLua_TeamTypeAutocreateFunction(sw_lua, TeamType);
             }
 
             sw_lua.Write("\n\n");
@@ -741,7 +699,7 @@ namespace OpenRAMissionGenConsole
             sw_lua.Write("\n\n");
 
             sw_lua.Write("WorldLoaded = function()\n");
-            foreach(var Country in DefaultCountries)
+            foreach(var Country in Ra95MissionIni_Country.GetDefaultCountries())
             {
                 sw_lua.Write("\t{0} = Player.GetPlayer(\"{1}\")\n", Country.ToLower(), Country);
             }
@@ -824,15 +782,15 @@ namespace OpenRAMissionGenConsole
             sw_lua.Write(celltrigerstr);
         }
         
-        private void GenLua_TeamTypeFunctions(StreamWriter sw_lua, Ra95MissionIni_TeamType TeamType)
+        private void GenLua_TeamTypeAutocreateFunction(StreamWriter sw_lua, Ra95MissionIni_TeamType TeamType)
         {
             //Create Team Function
             if (TeamType.Opt_Only_Autocreate_AI)
             {
-                sw_lua.Write("TeamType_{0}_Produce = function()\n", TeamType.Name);
+                sw_lua.Write("TeamType_{0}_Autocreate = function()\n", TeamType.Name);
                 sw_lua.Write("\tOrderIndex_{0}=0\n", TeamType.Name);
-                sw_lua.Write("\t{0}.Build(TeamType_{1}, function(tTeamInstance_{1})\n", DefaultCountries[TeamType.Owner].ToLower(), TeamType.Name);
-                sw_lua.Write("\t\tUtils.Do(tTeamInstance_{0}, function(Act)\n", TeamType.Name);
+                sw_lua.Write("\t{0}.Build(TeamType_{1}, function(TeamInstance_{1})\n", Ra95MissionIni_Country.GetDefaultCountryL(TeamType.Owner), TeamType.Name);
+                sw_lua.Write("\t\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
                 sw_lua.Write("\t\t\tTrigger.OnIdle(Act, function()\n");
                 if (TeamType.Orders.Count > 0)
                 {
@@ -853,15 +811,11 @@ namespace OpenRAMissionGenConsole
 
                         if (Order.Order == TeamOrderType.Move_to_waypoint)
                         {
-                            var w = new Ra95MissionIni_Waypoint();
-                            GetWayPoint(Order.Para, out w);
-                            sw_lua.Write("\t\t\t\t\tAct.Move(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
+                            if(IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\t\tAct.Move(Waypoint_{0})\n", Order.Para);
                         }
                         else if (Order.Order == TeamOrderType.Attack_Waypoint)
                         {
-                            var w = new Ra95MissionIni_Waypoint();
-                            GetWayPoint(Order.Para, out w);
-                            sw_lua.Write("\t\t\t\t\tAct.AttackMove(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
+                            if (IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\t\tAct.AttackMove(Waypoint_{0})\n", Order.Para);
                         }
                         else
                         {
@@ -883,249 +837,452 @@ namespace OpenRAMissionGenConsole
                 sw_lua.Write("\tend)\n");
                 sw_lua.Write("end\n\n");
             }
+        }
 
-            else
-            //ReinForce function
+        private List<int> FoundNearestActorIndex(String type,int num,String country,Ra95MissionIni_Pos pos)
+        {
+            List<int> ret = new List<int>();
+
+            var acts = new List<Ra95MissionIni_Actor>();
+
+            foreach(var a in Actors)
             {
-                sw_lua.Write("TeamType_{0}_Reinforce = function()\n", TeamType.Name);
-                sw_lua.Write("\tOrderIndex_{0}=0\n", TeamType.Name);
-                
-                if (TeamType.HasUnit("badr")&& TeamType.Teams.Count>=2)//paratroop
+                if(a.Type.ToLower() == type.ToLower() && a.Owner.ToLower()== country.ToLower()&&!a.AlreadyInTeam)
                 {
-                    var Teams = TeamType.GetTeamsWithExceptionFilter("badr");
-                    String teamstr = "\tlocal Local_TeamType_" + TeamType.Name + "={";
-                    for (int teamindex = 0; teamindex < Teams.Count; teamindex++)
+                    acts.Add(a.Clone());
+                }
+            }
+            double[] distances = new double[acts.Count];
+            for(int i=0;i<acts.Count;i++)
+            {
+                distances[i] = acts[i].Pos.CalcDistance(pos);
+            }
+
+            for (int i = 0; i < acts.Count; i++)
+            {
+                for (int j = 0; j < acts.Count-1; j++)
+                {
+                    if(distances[j]>= distances[j+1])
                     {
-                        for (int numi = 0; numi < Teams[teamindex].Num; numi++)
-                        {
-                            teamstr += "\"" + Teams[teamindex].Type.ToLower() + "\"";
-                            if (teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1) ;
-                            else teamstr += ",";
-                        }
-                    }
-                    teamstr += "}\n";
-                    sw_lua.Write(teamstr);
+                        double distance = distances[j+1];
+                        Ra95MissionIni_Actor act = acts[j+1].Clone();
 
-                    if (TeamType.Orders.Count >= 1)
-                    {
-                        if (TeamType.Orders[0].Order == TeamOrderType.Attack_Waypoint)
-                        {
-                            var WaypointEntry = new Ra95MissionIni_Waypoint();
-                            var WaypointUnload = new Ra95MissionIni_Waypoint();
+                        distances[j + 1] = distances[j];
+                        acts[j + 1] = acts[j];
 
-                            GetWayPoint(TeamType.WayPoint, out WaypointEntry);
-                            GetWayPoint(TeamType.Orders[0].Para, out WaypointUnload);
-
-                            if (WaypointUnload == null && WaypointEntry == null)
-                            {
-                                WaypointEntry = new Ra95MissionIni_Waypoint();
-                                WaypointUnload = new Ra95MissionIni_Waypoint();
-                            }
-                            else if (WaypointEntry == null)
-                            {
-                                WaypointEntry = new Ra95MissionIni_Waypoint();
-                                WaypointEntry.Pos.x = 0;
-                                WaypointEntry.Pos.y = 0;
-                            }
-                            else if (WaypointUnload == null)
-                            {
-                                WaypointUnload = WaypointEntry.Clone();
-                                WaypointEntry = new Ra95MissionIni_Waypoint();
-                                WaypointEntry.Pos.x = 0;
-                                WaypointEntry.Pos.y = 0;
-                            }
-
-                            sw_lua.Write("\tlocal Local_EntryPoint=CPos.New({0}, {1})\n", WaypointEntry.Pos.x, WaypointEntry.Pos.y);
-                            sw_lua.Write("\tlocal Local_UnloadPoint=CPos.New({0}, {1})\n", WaypointUnload.Pos.x, WaypointUnload.Pos.y);
-                            sw_lua.Write("\tlocal Local_ExitPoint=CPos.New(0, 0)\n");
-
-                            
-                            sw_lua.Write("\tTeamInstance_{0}=Reinforcements.ReinforceWithTransport({1},\"badr\", Local_TeamType_{0},{{Local_EntryPoint,Local_UnloadPoint}}, {{Local_ExitPoint}})\n",
-                                TeamType.Name,
-                                DefaultCountries[TeamType.Owner].ToLower());
-                                
-
-                            //sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
-                            //sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
-
-                        }
+                        distances[j] = distance;
+                        acts[j] = act;
                     }
                 }
-                else if (TeamType.HasUnit("tran") && TeamType.Teams.Count >= 2)//unload from heli
+            }
+
+            for (int i = 0; i < acts.Count && i< num; i++)
+            {
+                distances[i] = acts[i].Pos.CalcDistance(pos);
+                ret.Add(acts[i].index);
+                Console.WriteLine("{0}_{1}:{2}", acts[i].index, acts[i].Type, distances[i]);
+            }
+            
+            return ret;
+        }
+        
+        private void GenLua_TeamTypeOrdersBlock(StreamWriter sw_lua, String TeamInstanceName, String TeamName, List<Ra95MissionIni_TeamType_Order> Orders,int TabCnt)
+        {
+            String Tab = String.Empty;
+            for (int i = 0; i < TabCnt; i++) Tab += "\t";
+            String OrderIndexName = "OrderIndex_" + TeamName;
+
+            sw_lua.Write("\t{0}=0\n", OrderIndexName);
+            sw_lua.Write("\tUtils.Do({0}, function(Act)\n", TeamInstanceName);
+            sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
+            if (Orders.Count > 0)
+            {
+                bool first_order = true;
+                for (int OrderIndex = 0; OrderIndex < Orders.Count; OrderIndex++)
                 {
-                    var Teams = TeamType.GetTeamsWithExceptionFilter("tran");
-                    String teamstr = "\tlocal Local_TeamType_" + TeamType.Name + "={";
-                    for (int teamindex = 0; teamindex < Teams.Count; teamindex++)
+                    var Order = Orders[OrderIndex];
+                    if (first_order)
                     {
-                        for (int numi = 0; numi < Teams[teamindex].Num; numi++)
-                        {
-                            teamstr += "\"" + Teams[teamindex].Type.ToLower() + "\"";
-                            if (teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1) ;
-                            else teamstr += ",";
-                        }
+                        first_order = false;
+                        sw_lua.Write("\t\t\tif {0} == {1} then\n", OrderIndexName, OrderIndex);
                     }
-                    teamstr += "}\n";
-                    sw_lua.Write(teamstr);
-
-                    if (TeamType.Orders.Count >= 2)
+                    else
                     {
-                        if (TeamType.Orders[0].Order == TeamOrderType.Move_to_waypoint && TeamType.Orders[1].Order == TeamOrderType.Unload)
-                        {
-                            var WaypointEntry = new Ra95MissionIni_Waypoint();
-                            var WaypointUnload = new Ra95MissionIni_Waypoint();
+                        sw_lua.Write("\t\t\telseif {0} == {1} then\n", OrderIndexName, OrderIndex);
+                    }
+                    sw_lua.Write("\t\t\t\t--Order:{0}\n", ((TeamOrderType)Order.Order).ToString());
 
-
-                            GetWayPoint(TeamType.WayPoint, out WaypointEntry);
-                            GetWayPoint(TeamType.Orders[0].Para, out WaypointUnload);
-
-                            if (WaypointUnload == null && WaypointEntry == null)
-                            {
-                                WaypointEntry = new Ra95MissionIni_Waypoint();
-                                WaypointUnload = new Ra95MissionIni_Waypoint();
-                            }
-                            else if (WaypointEntry == null)
-                            {
-                                WaypointEntry = WaypointUnload.Clone();
-                            }
-                            else if (WaypointUnload == null)
-                            {
-                                WaypointUnload = WaypointEntry.Clone();
-                            }
-
-                            sw_lua.Write("\tlocal Local_EntryPoint=CPos.New({0}, {1})\n", WaypointEntry.Pos.x, WaypointEntry.Pos.y);
-                            sw_lua.Write("\tlocal Local_UnloadPoint=CPos.New({0}, {1})\n", WaypointUnload.Pos.x, WaypointUnload.Pos.y);
-                            sw_lua.Write("\tlocal Local_ExitPoint=CPos.New(0, 0)\n");
-
-
-                            sw_lua.Write("\tTeamInstance_{0}=Reinforcements.ReinforceWithTransport({1},\"tran\", Local_TeamType_{0},{{Local_EntryPoint,Local_UnloadPoint}}, {{Local_ExitPoint}})\n",
-                                TeamType.Name,
-                                DefaultCountries[TeamType.Owner].ToLower());
-
-                            //sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
-                            //sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
-
-                        }
+                    if (Order.Order == TeamOrderType.Move_to_waypoint)
+                    {
+                        if (IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\tAct.Move(Waypoint_{0})\n", Order.Para);
+                    }
+                    else if (Order.Order == TeamOrderType.Attack_Waypoint)
+                    {
+                        if (IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\tAct.AttackMove(Waypoint_{0})\n", Order.Para);
+                    }
+                    else if (Order.Order == TeamOrderType.Do_this)
+                    {
+                        sw_lua.Write("\t\t\t\tAct.Hunt()\n");
                     }
                 }
-                else if (TeamType.HasUnit("lst") && TeamType.Teams.Count >= 2)//unload
+                sw_lua.Write("\t\t\telse\n");
+                sw_lua.Write("\t\t\t\t--OrderCnt:{0}\n", Orders.Count);
+                sw_lua.Write("\t\t\t\tTrigger.ClearAll(Act)\n");
+                sw_lua.Write("\t\t\tend\n");
+            }
+            else
+            {
+                sw_lua.Write("\t\t\tTrigger.ClearAll(Act)\n");
+            }
+            sw_lua.Write("\t\t\tOrderIndex_{0}=OrderIndex_{0}+1\n", TeamName);
+            sw_lua.Write("\t\tend)\n");
+            sw_lua.Write("\tend)\n");
+        }
+
+        private void GenLua_TriggerCreateTeamTypeBlock(StreamWriter sw_lua, Ra95MissionIni_TeamType TeamType, Ra95MissionIni_Trigger Trigger)
+        {
+            Ra95MissionIni_Waypoint w = new Ra95MissionIni_Waypoint();
+            if (!GetWayPoint(TeamType.WayPoint, out w))
+            {
+                w = new Ra95MissionIni_Waypoint();
+                w.Pos.x = 0;
+                w.Pos.y = 0;
+            }
+
+            Dictionary<String, int> Teams = new Dictionary<String, int>();
+            foreach (var Team in TeamType.Teams)
+            {
+                if (Teams.ContainsKey(Team.Type)) Teams[Team.Type] += Team.Num;
+                else Teams[Team.Type] = Team.Num;
+            }
+
+            bool alradyexist = false;
+            List<int> indexes = new List<int>();
+            foreach (var TeamPair in Teams)
+            {
+                List<int> indexesi = FoundNearestActorIndex(TeamPair.Key, TeamPair.Value, Ra95MissionIni_Country.GetDefaultCountry(TeamType.Owner), w.Pos);
+                if(indexesi.Count!=TeamPair.Value)
                 {
-                    var Teams = TeamType.GetTeamsWithExceptionFilter("lst");
-                    String teamstr = "\tlocal Local_TeamType_" + TeamType.Name + "={";
-                    for (int teamindex = 0; teamindex < Teams.Count; teamindex++)
-                    {
-                        for (int numi = 0; numi < Teams[teamindex].Num; numi++)
-                        {
-                            teamstr += "\"" + Teams[teamindex].Type.ToLower() + "\"";
-                            if(! (teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1)) teamstr += ",";
-                        }
-                    }
-                    teamstr += "}\n";
-                    sw_lua.Write(teamstr);
-
-                    if (TeamType.Orders.Count >= 2)
-                    {
-                        if (TeamType.Orders[0].Order == TeamOrderType.Move_to_waypoint && TeamType.Orders[1].Order == TeamOrderType.Unload)
-                        {
-                            var WaypointEntry = new Ra95MissionIni_Waypoint();
-                            var WaypointUnload = new Ra95MissionIni_Waypoint();
-
-
-                            GetWayPoint(TeamType.WayPoint, out WaypointEntry);
-                            GetWayPoint(TeamType.Orders[0].Para, out WaypointUnload);
-
-                            if (WaypointUnload == null && WaypointEntry == null)
-                            {
-                                WaypointEntry = new Ra95MissionIni_Waypoint();
-                                WaypointUnload = new Ra95MissionIni_Waypoint();
-                            }
-                            else if (WaypointEntry == null)
-                            {
-                                WaypointEntry = WaypointUnload.Clone();
-                            }
-                            else if (WaypointUnload == null)
-                            {
-                                WaypointUnload = WaypointEntry.Clone();
-                            }
-
-                            sw_lua.Write("\tlocal Local_EntryPoint=CPos.New({0}, {1})\n",WaypointEntry.Pos.x, WaypointEntry.Pos.y);
-                            sw_lua.Write("\tlocal Local_UnloadPoint=CPos.New({0}, {1})\n", WaypointUnload.Pos.x, WaypointUnload.Pos.y);
-                            sw_lua.Write("\tlocal Local_ExitPoint=CPos.New(0,0)\n");
-
-                            
-                            sw_lua.Write("\tTeamInstance_{0}=Reinforcements.ReinforceWithTransport({1},\"lst\", Local_TeamType_{0},{{Local_EntryPoint,WaypointUnload}}, {{Local_ExitPoint}})\n", 
-                                TeamType.Name, 
-                                DefaultCountries[TeamType.Owner].ToLower());
-                                
-                            //sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
-                            //sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
-
-                        }
-                    }
-                }
-                else if (TeamType.HasUnit("badr") && TeamType.Teams.Count == 1)//para bomb
-                {
-
+                    alradyexist = false;
+                    break;
                 }
                 else
                 {
-                    var Waypoint = new Ra95MissionIni_Waypoint();
-                    if (GetWayPoint(TeamType.WayPoint, out Waypoint))
-                    {
-                        sw_lua.Write("\tlocal TeamInstance_{0}=Reinforcements.Reinforce({1}, TeamType_{0},{{CPos.New({2}, {3})}}, DateTime.Seconds(0))\n", 
-                            TeamType.Name, 
-                            DefaultCountries[TeamType.Owner].ToLower(), 
-                            Waypoint.Pos.x, Waypoint.Pos.y);
-                        sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
-                        sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
-                        if (TeamType.Orders.Count > 0)
-                        {
-                            bool first_order = true;
-                            for (int OrderIndex = 0; OrderIndex < TeamType.Orders.Count; OrderIndex++)
-                            {
-                                var Order = TeamType.Orders[OrderIndex];
-                                if (first_order)
-                                {
-                                    first_order = false;
-                                    sw_lua.Write("\t\t\tif OrderIndex_{0} == {1} then\n", TeamType.Name, OrderIndex);
-                                }
-                                else
-                                {
-                                    sw_lua.Write("\t\t\telseif OrderIndex_{0} == {1} then\n", TeamType.Name, OrderIndex);
-                                }
-                                sw_lua.Write("\t\t\t\t--Order:{0}\n", ((TeamOrderType)Order.Order).ToString());
+                    alradyexist = true;
+                    indexes = indexes.Union(indexesi).ToList();
+                }
+            }
 
-                                if (Order.Order == TeamOrderType.Move_to_waypoint)
-                                {
-                                    var w = new Ra95MissionIni_Waypoint();
-                                    GetWayPoint(Order.Para, out w);
-                                    if(w!=null) sw_lua.Write("\t\t\t\tAct.Move(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
-                                }
-                                else if (Order.Order == TeamOrderType.Attack_Waypoint)
-                                {
-                                    var w = new Ra95MissionIni_Waypoint();
-                                    GetWayPoint(Order.Para, out w);
-                                    if (w != null) sw_lua.Write("\t\t\t\tAct.AttackMove(CPos.New({0}, {1}))\n", w.Pos.x, w.Pos.y);
-                                }
-                                else
-                                {
-                                    sw_lua.Write("\t\t\t\tTrigger.ClearAll(Act)\n");
-                                }
-                            }
-                            sw_lua.Write("\t\t\telse\n");
-                            sw_lua.Write("\t\t\t\t--OrderCnt:{0}\n", TeamType.Orders.Count);
-                            sw_lua.Write("\t\t\t\tTrigger.ClearAll(Act)\n");
-                            sw_lua.Write("\t\t\tend\n");
+            if (alradyexist)
+            {
+                foreach (var index in indexes) Actors[index].AlreadyInTeam = true;
+
+                String teamstr = "\tlocal TeamInstance_" + TeamType.Name + "={";
+                for (int i = 0;i < indexes.Count;i++)
+                {
+                    teamstr += String.Format("Actor{0}" , indexes[i]);
+                    if (i < indexes.Count - 1 )  teamstr += ",";
+                }
+                teamstr += "}\n";
+                sw_lua.Write(teamstr);
+
+                GenLua_TeamTypeOrdersBlock(
+                    sw_lua,
+                    "TeamInstance_" + TeamType.Name,
+                    TeamType.Name+"_"+Trigger.Name,
+                    TeamType.Orders,
+                    1);
+            }
+            else
+            {
+                sw_lua.Write("\tOrderIndex_{0}=0\n", TeamType.Name);
+                sw_lua.Write("\t{0}.Build(TeamType_{1}, function(TeamInstance_{1})\n", Ra95MissionIni_Country.GetDefaultCountryL(TeamType.Owner), TeamType.Name);
+                sw_lua.Write("\t\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
+                sw_lua.Write("\t\t\tTrigger.OnIdle(Act, function()\n");
+                if (TeamType.Orders.Count > 0)
+                {
+                    bool first_order = true;
+                    for (int OrderIndex = 0; OrderIndex < TeamType.Orders.Count; OrderIndex++)
+                    {
+                        var Order = TeamType.Orders[OrderIndex];
+                        if (first_order)
+                        {
+                            first_order = false;
+                            sw_lua.Write("\t\t\t\tif OrderIndex_{0} == {1} then\n", TeamType.Name, OrderIndex);
                         }
                         else
                         {
-                            sw_lua.Write("\t\t\tTrigger.ClearAll(Act)\n");
+                            sw_lua.Write("\t\t\t\telseif OrderIndex_{0} == {1} then\n", TeamType.Name, OrderIndex);
                         }
-                        sw_lua.Write("\t\t\tOrderIndex_{0}=OrderIndex_{0}+1\n", TeamType.Name);
-                        sw_lua.Write("\t\tend)\n");
-                        sw_lua.Write("\tend)\n");
+                        sw_lua.Write("\t\t\t\t\t--Order:{0}\n", ((TeamOrderType)Order.Order).ToString());
+
+                        if (Order.Order == TeamOrderType.Move_to_waypoint)
+                        {
+                            if (IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\t\tAct.Move(Waypoint_{0})\n", Order.Para);
+                        }
+                        else if (Order.Order == TeamOrderType.Attack_Waypoint)
+                        {
+                            if (IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\t\tAct.AttackMove(Waypoint_{0})\n", Order.Para);
+                        }
+                        else
+                        {
+                            sw_lua.Write("\t\t\t\t\tTrigger.ClearAll(Act)\n");
+                        }
+                    }
+                    sw_lua.Write("\t\t\t\telse\n");
+                    sw_lua.Write("\t\t\t\t\t--OrderCnt:{0}\n", TeamType.Orders.Count);
+                    sw_lua.Write("\t\t\t\t\tTrigger.ClearAll(Act)\n");
+                    sw_lua.Write("\t\t\t\tend\n");
+                }
+                else
+                {
+                    sw_lua.Write("\t\t\t\tTrigger.ClearAll(Act)\n");
+                }
+                sw_lua.Write("\t\t\t\tOrderIndex_{0}=OrderIndex_{0}+1\n", TeamType.Name);
+                sw_lua.Write("\t\t\tend)\n");
+                sw_lua.Write("\t\tend)\n");
+                sw_lua.Write("\tend)\n");
+            }
+
+
+
+        }
+
+        private void GenLua_TriggerReinForceTeamTypeBlock(StreamWriter sw_lua, Ra95MissionIni_TeamType TeamType, Ra95MissionIni_Trigger Trigger)
+        {
+            String OrderIndexName = String.Format("OrderIndex_{0}_{1}", Trigger.Name, TeamType.Name);
+            sw_lua.Write("\t{0}=0\n", OrderIndexName);
+
+            if (TeamType.HasUnit("badr") && TeamType.Teams.Count >= 2)//paratroop
+            {
+                var Teams = TeamType.GetTeamsWithExceptionFilter("badr");
+                String teamstr = "\tlocal Local_TeamType_" + TeamType.Name + "={";
+                for (int teamindex = 0; teamindex < Teams.Count; teamindex++)
+                {
+                    for (int numi = 0; numi < Teams[teamindex].Num; numi++)
+                    {
+                        teamstr += "\"" + Teams[teamindex].Type.ToLower() + "\"";
+                        if (teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1) ;
+                        else teamstr += ",";
                     }
                 }
-                sw_lua.Write("end\n\n");
+                teamstr += "}\n";
+                sw_lua.Write(teamstr);
+
+                if (TeamType.Orders.Count >= 1)
+                {
+                    if (TeamType.Orders[0].Order == TeamOrderType.Attack_Waypoint)
+                    {
+                        var WaypointEntry = new Ra95MissionIni_Waypoint();
+                        var WaypointUnload = new Ra95MissionIni_Waypoint();
+
+                        GetWayPoint(TeamType.WayPoint, out WaypointEntry);
+                        GetWayPoint(TeamType.Orders[0].Para, out WaypointUnload);
+
+                        if (WaypointUnload == null && WaypointEntry == null)
+                        {
+                            WaypointEntry = new Ra95MissionIni_Waypoint();
+                            WaypointUnload = new Ra95MissionIni_Waypoint();
+                        }
+                        else if (WaypointEntry == null)
+                        {
+                            WaypointEntry = new Ra95MissionIni_Waypoint();
+                            WaypointEntry.Pos.x = 0;
+                            WaypointEntry.Pos.y = 0;
+                        }
+                        else if (WaypointUnload == null)
+                        {
+                            WaypointUnload = WaypointEntry.Clone();
+                            WaypointEntry = new Ra95MissionIni_Waypoint();
+                            WaypointEntry.Pos.x = 0;
+                            WaypointEntry.Pos.y = 0;
+                        }
+
+                        sw_lua.Write("\tlocal Local_EntryPoint=CPos.New({0}, {1})\n", WaypointEntry.Pos.x, WaypointEntry.Pos.y);
+                        sw_lua.Write("\tlocal Local_UnloadPoint=CPos.New({0}, {1})\n", WaypointUnload.Pos.x, WaypointUnload.Pos.y);
+                        sw_lua.Write("\tlocal Local_ExitPoint=CPos.New(0, 0)\n");
+
+
+                        sw_lua.Write("\tlocal TeamInstance_{0}=Reinforcements.ReinforceWithTransport({1},\"badr\", Local_TeamType_{0},{{Local_EntryPoint,Local_UnloadPoint}}, {{Local_ExitPoint}})\n",
+                            TeamType.Name,
+                            Ra95MissionIni_Country.GetDefaultCountryL(TeamType.Owner));
+
+
+                        //sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
+                        //sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
+
+                    }
+                }
+            }
+            else if (TeamType.HasUnit("tran") && TeamType.Teams.Count >= 2)//unload from heli
+            {
+                var Teams = TeamType.GetTeamsWithExceptionFilter("tran");
+                String teamstr = "\tlocal Local_TeamType_" + TeamType.Name + "={";
+                for (int teamindex = 0; teamindex < Teams.Count; teamindex++)
+                {
+                    for (int numi = 0; numi < Teams[teamindex].Num; numi++)
+                    {
+                        teamstr += "\"" + Teams[teamindex].Type.ToLower() + "\"";
+                        if (teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1) ;
+                        else teamstr += ",";
+                    }
+                }
+                teamstr += "}\n";
+                sw_lua.Write(teamstr);
+
+                if (TeamType.Orders.Count >= 2)
+                {
+                    if (TeamType.Orders[0].Order == TeamOrderType.Move_to_waypoint && TeamType.Orders[1].Order == TeamOrderType.Unload)
+                    {
+                        var WaypointEntry = new Ra95MissionIni_Waypoint();
+                        var WaypointUnload = new Ra95MissionIni_Waypoint();
+
+
+                        GetWayPoint(TeamType.WayPoint, out WaypointEntry);
+                        GetWayPoint(TeamType.Orders[0].Para, out WaypointUnload);
+
+                        if (WaypointUnload == null && WaypointEntry == null)
+                        {
+                            WaypointEntry = new Ra95MissionIni_Waypoint();
+                            WaypointUnload = new Ra95MissionIni_Waypoint();
+                        }
+                        else if (WaypointEntry == null)
+                        {
+                            WaypointEntry = WaypointUnload.Clone();
+                        }
+                        else if (WaypointUnload == null)
+                        {
+                            WaypointUnload = WaypointEntry.Clone();
+                        }
+
+                        sw_lua.Write("\tlocal Local_EntryPoint=CPos.New({0}, {1})\n", WaypointEntry.Pos.x, WaypointEntry.Pos.y);
+                        sw_lua.Write("\tlocal Local_UnloadPoint=CPos.New({0}, {1})\n", WaypointUnload.Pos.x, WaypointUnload.Pos.y);
+                        sw_lua.Write("\tlocal Local_ExitPoint=CPos.New(0, 0)\n");
+
+
+                        sw_lua.Write("\tlocal TeamInstance_{0}=Reinforcements.ReinforceWithTransport({1},\"tran\", Local_TeamType_{0},{{Local_EntryPoint,Local_UnloadPoint}}, {{Local_ExitPoint}})\n",
+                            TeamType.Name,
+                            Ra95MissionIni_Country.GetDefaultCountryL(TeamType.Owner));
+
+                        //sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
+                        //sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
+
+                    }
+                }
+            }
+            else if (TeamType.HasUnit("lst") && TeamType.Teams.Count >= 2)//unload
+            {
+                var Teams = TeamType.GetTeamsWithExceptionFilter("lst");
+                String teamstr = "\tlocal Local_TeamType_" + TeamType.Name + "={";
+                for (int teamindex = 0; teamindex < Teams.Count; teamindex++)
+                {
+                    for (int numi = 0; numi < Teams[teamindex].Num; numi++)
+                    {
+                        teamstr += "\"" + Teams[teamindex].Type.ToLower() + "\"";
+                        if (!(teamindex >= Teams.Count - 1 && numi >= Teams[teamindex].Num - 1)) teamstr += ",";
+                    }
+                }
+                teamstr += "}\n";
+                sw_lua.Write(teamstr);
+
+                if (TeamType.Orders.Count >= 2)
+                {
+                    if (TeamType.Orders[0].Order == TeamOrderType.Move_to_waypoint && TeamType.Orders[1].Order == TeamOrderType.Unload)
+                    {
+                        var WaypointEntry = new Ra95MissionIni_Waypoint();
+                        var WaypointUnload = new Ra95MissionIni_Waypoint();
+
+
+                        GetWayPoint(TeamType.WayPoint, out WaypointEntry);
+                        GetWayPoint(TeamType.Orders[0].Para, out WaypointUnload);
+
+                        if (WaypointUnload == null && WaypointEntry == null)
+                        {
+                            WaypointEntry = new Ra95MissionIni_Waypoint();
+                            WaypointUnload = new Ra95MissionIni_Waypoint();
+                        }
+                        else if (WaypointEntry == null)
+                        {
+                            WaypointEntry = WaypointUnload.Clone();
+                        }
+                        else if (WaypointUnload == null)
+                        {
+                            WaypointUnload = WaypointEntry.Clone();
+                        }
+
+                        sw_lua.Write("\tlocal Local_EntryPoint=CPos.New({0}, {1})\n", WaypointEntry.Pos.x, WaypointEntry.Pos.y);
+                        sw_lua.Write("\tlocal Local_UnloadPoint=CPos.New({0}, {1})\n", WaypointUnload.Pos.x, WaypointUnload.Pos.y);
+                        sw_lua.Write("\tlocal Local_ExitPoint=CPos.New(0,0)\n");
+
+
+                        sw_lua.Write("\tlocal TeamInstance_{0}=Reinforcements.ReinforceWithTransport({1},\"lst\", Local_TeamType_{0},{{Local_EntryPoint,WaypointUnload}}, {{Local_ExitPoint}})\n",
+                            TeamType.Name,
+                            Ra95MissionIni_Country.GetDefaultCountryL(TeamType.Owner));
+
+                        //sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
+                        //sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
+
+                    }
+                }
+            }
+            else if (TeamType.HasUnit("badr") && TeamType.Teams.Count == 1)//para bomb
+            {
+
+            }
+            else
+            {
+                var Waypoint = new Ra95MissionIni_Waypoint();
+                if (IsWayPointExist(TeamType.WayPoint))
+                {
+                    sw_lua.Write("\tlocal TeamInstance_{0}=Reinforcements.Reinforce({1}, TeamType_{0},{{Waypoint_{2}}}, DateTime.Seconds(0))\n",
+                        TeamType.Name,
+                        Ra95MissionIni_Country.GetDefaultCountryL(TeamType.Owner),
+                        TeamType.WayPoint);
+                    sw_lua.Write("\tUtils.Do(TeamInstance_{0}, function(Act)\n", TeamType.Name);
+                    sw_lua.Write("\t\tTrigger.OnIdle(Act, function()\n");
+                    if (TeamType.Orders.Count > 0)
+                    {
+                        bool first_order = true;
+                        for (int OrderIndex = 0; OrderIndex < TeamType.Orders.Count; OrderIndex++)
+                        {
+                            var Order = TeamType.Orders[OrderIndex];
+                            if (first_order)
+                            {
+                                first_order = false;
+                                sw_lua.Write("\t\t\tif {0} == {1} then\n", OrderIndexName, OrderIndex);
+                            }
+                            else
+                            {
+                                sw_lua.Write("\t\t\telseif {0} == {1} then\n", OrderIndexName, OrderIndex);
+                            }
+                            sw_lua.Write("\t\t\t\t--Order:{0}\n", ((TeamOrderType)Order.Order).ToString());
+
+                            if (Order.Order == TeamOrderType.Move_to_waypoint)
+                            {
+                                if (IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\tAct.Move(Waypoint_{0})\n", Order.Para);
+                            }
+                            else if (Order.Order == TeamOrderType.Attack_Waypoint)
+                            {
+                                if (IsWayPointExist(Order.Para)) sw_lua.Write("\t\t\t\tAct.AttackMove(Waypoint_{0})\n", Order.Para);
+                            }
+                            else
+                            {
+                                sw_lua.Write("\t\t\t\tTrigger.ClearAll(Act)\n");
+                            }
+                        }
+                        sw_lua.Write("\t\t\telse\n");
+                        sw_lua.Write("\t\t\t\t--OrderCnt:{0}\n", TeamType.Orders.Count);
+                        sw_lua.Write("\t\t\t\tTrigger.ClearAll(Act)\n");
+                        sw_lua.Write("\t\t\tend\n");
+                    }
+                    else
+                    {
+                        sw_lua.Write("\t\t\tTrigger.ClearAll(Act)\n");
+                    }
+                    sw_lua.Write("\t\t\t{0}={0}+1\n", OrderIndexName);
+                    sw_lua.Write("\t\tend)\n");
+                    sw_lua.Write("\tend)\n");
+                }
             }
         }
 
@@ -1151,25 +1308,10 @@ namespace OpenRAMissionGenConsole
             GetCelltrigger(Trigger.Name, out CellTrigger);
 
             List<String> triggerunits = new List<string>();
-            foreach (var s in Structures)
+            foreach (var a in Actors)
             {
-                if (s.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Structure_{0}", s.index));
-            }
-            foreach (var u in Units)
-            {
-                if (u.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Unit_{0}", u.index));
-            }
-            foreach (var s in Ships)
-            {
-                if (s.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Ship_{0}", s.index));
-            }
-            foreach (var i in Infantries)
-            {
-                if (i.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Infantry_{0}", i.index));
+                if (a.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor{0}", a.index));
             }
             return triggerunits;
         }
@@ -1179,25 +1321,10 @@ namespace OpenRAMissionGenConsole
             GetCelltrigger(Trigger.Name, out CellTrigger);
 
             List<String> triggerunits = new List<string>();
-            foreach (var s in Structures)
+            foreach (var a in Actors)
             {
-                if (s.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Structure_{0}", s.index));
-            }
-            foreach (var u in Units)
-            {
-                if (u.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Unit_{0}", u.index));
-            }
-            foreach (var s in Ships)
-            {
-                if (s.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Ship_{0}", s.index));
-            }
-            foreach (var i in Infantries)
-            {
-                if (i.Trigger == Trigger.Name)
-                    triggerunits.Add(String.Format("Actor_Infantry_{0}", i.index));
+                if (a.Trigger == Trigger.Name)
+                    triggerunits.Add(String.Format("Actor{0}", a.index));
             }
 
             String teamstr = "\tlocal Local_TriggerTeam_" + Trigger.Name + "={";
@@ -1236,8 +1363,12 @@ namespace OpenRAMissionGenConsole
 
             if (Action == TriggerActionType.Reinforcement_team)
             {
-                var team = TeamTypes[ActionParaA];
-                sw_lua.Write("\tTeamType_{0}_Reinforce()\n", team.Name);
+                GenLua_TriggerReinForceTeamTypeBlock(sw_lua, TeamTypes[ActionParaA], Trigger);
+            }
+            else if(Action == TriggerActionType.Create_Team)
+            {
+                GenLua_TriggerCreateTeamTypeBlock(sw_lua, TeamTypes[ActionParaA], Trigger);
+                //sw_lua.Write("\tGlobal_{0}=1\n", ActionParaC);
             }
             else if(Action == TriggerActionType.Global_Set)
             {
@@ -1373,7 +1504,7 @@ namespace OpenRAMissionGenConsole
                 if (IsCelltriggerExist(Trigger.Name))
                 {
                     sw_lua.Write("\tTrigger.OnEnteredFootprint(CellTrigger_{0}, function(a, id)\n", Trigger.Name);
-                    sw_lua.Write("\t\tif a.Owner == {0} then\n", DefaultCountries[EventParaB].ToLower(), Trigger.Name);
+                    sw_lua.Write("\t\tif a.Owner == {0} then\n", Ra95MissionIni_Country.GetDefaultCountryL(EventParaB), Trigger.Name);
 
                     sw_lua.Write("\t\t\tTrigger_{0}_Event{1}_Flag = 1\n", Trigger.Name, EventNum);
                     sw_lua.Write("\t\t\tTrigger_{0}_Logic()\n", Trigger.Name);
@@ -1387,7 +1518,7 @@ namespace OpenRAMissionGenConsole
                     if(TriggerTeam.Count>0)
                     {
                         sw_lua.Write("\tTrigger.OnCapture({0},function(self, captor, oldOwner, newOwner)\n", TriggerTeam[0]);
-                        sw_lua.Write("\t\tif newOwner == {0} then\n", DefaultCountries[Trigger.Owner].ToLower());
+                        sw_lua.Write("\t\tif newOwner == {0} then\n", Ra95MissionIni_Country.GetDefaultCountryL(EventParaB));
                         sw_lua.Write("\t\t\tTrigger_{0}_Event{1}_Flag = 1\n", Trigger.Name, EventNum);
                         sw_lua.Write("\t\t\tTrigger_{0}_Logic()\n", Trigger.Name);
                         sw_lua.Write("\t\tend\n");
@@ -1458,55 +1589,7 @@ namespace OpenRAMissionGenConsole
 
         public List<IniPair> iniPairs = new List<IniPair>();
     }
-    class Ra95MissionIni_Overlay
-    {
-        private static string[] redAlertOverlayNames =
-        {
-            "sbag", "cycl", "brik", "fenc", "wood",
-            "gold01", "gold02", "gold03", "gold04",
-            "gem01", "gem02", "gem03", "gem04",
-            "v12", "v13", "v14", "v15", "v16", "v17", "v18",
-            "fpls", "wcrate", "scrate", "barb", "sbag",
-        };
-        public static bool IsOverlay(int type)
-        {
-            if (type < 0) return false;
-            else if (type >= redAlertOverlayNames.Length) return false;
-            return true;
-        }
-        public static String GetOverlayName(int type)
-        {
-            if (type < 0) return String.Empty;
-            else if (type >= redAlertOverlayNames.Length) return String.Empty;
-            return redAlertOverlayNames[type];
-        }
-
-        public String Overlay = String.Empty;
-        public Ra95MissionIni_Pos Pos=new Ra95MissionIni_Pos();
-
-        public bool IsOre()
-        {
-            bool ret = false;
-            if (Overlay == "gold01") ret = true;
-            else if (Overlay == "gold02") ret = true;
-            else if (Overlay == "gold03") ret = true;
-            else if (Overlay == "gold04") ret = true;
-            else if (Overlay == "gem01") ret = true;
-            else if (Overlay == "gem02") ret = true;
-            else if (Overlay == "gem03") ret = true;
-            else if (Overlay == "gem04") ret = true;
-            else if (Overlay == "wcrate") ret = true;
-            else if (Overlay == "scrate") ret = true;
-            return ret;
-        }
-    }
-
-    class Ra95MissionIni_Terrain
-    {
-        public String Terrain = String.Empty;
-        public Ra95MissionIni_Pos Pos = new Ra95MissionIni_Pos();
-    }
-
+    
     class Ra95MissionIni_Country
     {
         /*
@@ -1531,6 +1614,46 @@ namespace OpenRAMissionGenConsole
         Multi7
         Multi8
         */
+        private static String[] DefaultCountries =
+        {
+            "Spain",
+            "Greece",
+            "USSR",
+            "England",
+            "Ukraine",
+            "Germany",
+            "France",
+            "Turkey",
+            "GoodGuy",
+            "BadGuy",
+            "Neutral",
+            "Special",
+            "Multi1",
+            "Multi2",
+            "Multi3",
+            "Multi4",
+            "Multi5",
+            "Multi6",
+            "Multi7",
+            "Multi8"
+        };
+
+        public static String[] GetDefaultCountries()
+        {
+            return DefaultCountries;
+        }
+
+        public static String GetDefaultCountry(int index)
+        {
+            if (index < 0) return "Neutral";
+            else if (index >= DefaultCountries.Length) return "Neutral";
+            else return DefaultCountries[index];
+        }
+        public static String GetDefaultCountryL(int index)
+        {
+            return GetDefaultCountry(index).ToLower();
+        }
+
         public String Name = String.Empty;
         public bool PlayerControl = false;
         public String Allies = String.Empty;
@@ -1638,7 +1761,18 @@ namespace OpenRAMissionGenConsole
             y = (val >> 7) & 0x7f;
             return true;
         }
+        public double CalcDistance(Ra95MissionIni_Pos pos)
+        {
+            return Math.Sqrt((pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y));
+        }
 
+        public Ra95MissionIni_Pos Clone()
+        {
+            Ra95MissionIni_Pos ret = new Ra95MissionIni_Pos();
+            ret.x = x;
+            ret.y = y;
+            return ret;
+        }
     }
     class Ra95MissionIni_CellTrigger
     {
@@ -2091,34 +2225,53 @@ namespace OpenRAMissionGenConsole
         public String TruckCrate = String.Empty;
         public String Percent = String.Empty;
     }
-
-    class Ra95MissionIni_Structure
+    
+    class Ra95MissionIni_Actor
     {
-        //6=Spain,V10,256,11294,0,hel2,1,0
+        public enum ActorType
+        {
+            Invalid=-1,
+            Overlay=0,
+            Terrain,
+            Structure,
+            Infantry,
+            Unit,
+            Ship
+        };
+
+        public ActorType AType;
+
+        public int index = -1;
+
         public String Owner = String.Empty;
-        public String Structure = String.Empty;
+        public String Type = String.Empty;
         public int Health = 255;
         public Ra95MissionIni_Pos Pos = new Ra95MissionIni_Pos();
+
         public int Direction = 255;
         public String Trigger = String.Empty;
         public int Sellable = 0;
         public int Rebuild = 0;
 
-        public int index = -1;
+        public int PositionInCell = 0;
+        public String Mission = String.Empty;
 
-        public bool Parse(String key, String val)
+        public bool AlreadyInTeam = false;
+
+        public bool ParseStructure(String key, String val)
         {
             if (String.IsNullOrWhiteSpace(key) || String.IsNullOrWhiteSpace(val)) return false;
 
             bool ret = false;
             try
             {
-                index= int.Parse(key.Trim());
+                AType = ActorType.Structure;
+                index = int.Parse(key.Trim());
 
                 var vals = val.Split(',');
 
                 Owner = vals[0].Trim();
-                Structure = vals[1].Trim();
+                Type = vals[1].Trim();
                 Health = int.Parse(vals[2].Trim());
                 Pos = new Ra95MissionIni_Pos();
                 Pos.Parse(vals[3].Trim());
@@ -2136,35 +2289,24 @@ namespace OpenRAMissionGenConsole
             }
             return ret;
         }
-    }
-    class Ra95MissionIni_Infantry
-    {
-        //0=Greece,E1,230,5798,1,Area Guard,64,opd
-        public String Owner = String.Empty;
-        public String Infantry = String.Empty;
-        public int Health = 255;
-        public Ra95MissionIni_Pos Pos = new Ra95MissionIni_Pos();
-        
-        public int PositionInCell = 0;
-        public String Mission = String.Empty;
-        public int Direction = 255;
-        public String Trigger = String.Empty;
 
-        public int index = -1;
-
-        public bool Parse(String key, String val)
+        public bool ParseInfantry(String key, String val)
         {
+            //0=Greece,E1,230,5798,1,Area Guard,64,opd
             if (String.IsNullOrWhiteSpace(key) || String.IsNullOrWhiteSpace(val)) return false;
 
             bool ret = false;
             try
             {
+                AType = ActorType.Infantry;
+
                 index = int.Parse(key.Trim());
 
                 var vals = val.Split(',');
 
                 Owner = vals[0].Trim();
-                Infantry = vals[1].Trim();
+                Type =
+ vals[1].Trim();
                 Health = int.Parse(vals[2].Trim());
                 Pos = new Ra95MissionIni_Pos();
                 Pos.Parse(vals[3].Trim());
@@ -2173,7 +2315,7 @@ namespace OpenRAMissionGenConsole
                 Mission = vals[5].Trim();
                 Direction = int.Parse(vals[6].Trim());
                 Trigger = vals[7].Trim();
-                
+
                 ret = true;
             }
             catch (Exception)
@@ -2182,34 +2324,23 @@ namespace OpenRAMissionGenConsole
             }
             return ret;
         }
-    }
-    class Ra95MissionIni_Unit
-    {
-        //0=Greece,HARV,256,11594,192,Harvest,bdef
-        public String Owner = String.Empty;
-        public String Unit = String.Empty;
-        public int Health = 255;
-        public Ra95MissionIni_Pos Pos = new Ra95MissionIni_Pos();
 
-        public int Direction = 255;
-        public String Mission = String.Empty;
-        public String Trigger = String.Empty;
-
-        public int index = -1;
-
-        public bool Parse(String key, String val)
+        public bool ParseUnit(String key, String val)
         {
+            //0=Greece,HARV,256,11594,192,Harvest,bdef
             if (String.IsNullOrWhiteSpace(key) || String.IsNullOrWhiteSpace(val)) return false;
 
             bool ret = false;
             try
             {
+                AType = ActorType.Unit;
+
                 index = int.Parse(key.Trim());
 
                 var vals = val.Split(',');
 
                 Owner = vals[0].Trim();
-                Unit = vals[1].Trim();
+                Type = vals[1].Trim();
                 Health = int.Parse(vals[2].Trim());
                 Pos = new Ra95MissionIni_Pos();
                 Pos.Parse(vals[3].Trim());
@@ -2217,7 +2348,7 @@ namespace OpenRAMissionGenConsole
                 Direction = int.Parse(vals[4].Trim());
                 Mission = vals[5].Trim();
                 Trigger = vals[6].Trim();
-                
+
                 ret = true;
             }
             catch (Exception)
@@ -2226,34 +2357,23 @@ namespace OpenRAMissionGenConsole
             }
             return ret;
         }
-    }
-    class Ra95MissionIni_Ship
-    {
-        //0=USSR,SS,256,652,0,Sleep,None
-        public String Owner = String.Empty;
-        public String Ship = String.Empty;
-        public int Health = 255;
-        public Ra95MissionIni_Pos Pos = new Ra95MissionIni_Pos();
 
-        public int Direction = 255;
-        public String Mission = String.Empty;
-        public String Trigger = String.Empty;
-
-        public int index = -1;
-
-        public bool Parse(String key, String val)
+        public bool ParseShip(String key, String val)
         {
+            //0=USSR,SS,256,652,0,Sleep,None
             if (String.IsNullOrWhiteSpace(key) || String.IsNullOrWhiteSpace(val)) return false;
 
             bool ret = false;
             try
             {
+                AType = ActorType.Ship;
+
                 index = int.Parse(key.Trim());
 
                 var vals = val.Split(',');
 
                 Owner = vals[0].Trim();
-                Ship = vals[1].Trim();
+                Type = vals[1].Trim();
                 Health = int.Parse(vals[2].Trim());
                 Pos = new Ra95MissionIni_Pos();
                 Pos.Parse(vals[3].Trim());
@@ -2261,7 +2381,7 @@ namespace OpenRAMissionGenConsole
                 Direction = int.Parse(vals[4].Trim());
                 Mission = vals[5].Trim();
                 Trigger = vals[6].Trim();
-                
+
                 ret = true;
             }
             catch (Exception)
@@ -2270,6 +2390,94 @@ namespace OpenRAMissionGenConsole
             }
             return ret;
         }
+
+        private static string[] redAlertOverlayNames =
+        {
+            "sbag", "cycl", "brik", "fenc", "wood",
+            "gold01", "gold02", "gold03", "gold04",
+            "gem01", "gem02", "gem03", "gem04",
+            "v12", "v13", "v14", "v15", "v16", "v17", "v18",
+            "fpls", "wcrate", "scrate", "barb", "sbag",
+        };
+
+        public static bool IsOverlay(int type)
+        {
+            if (type < 0) return false;
+            else if (type >= redAlertOverlayNames.Length) return false;
+            return true;
+        }
+
+        public static String GetOverlayName(int type)
+        {
+            if (type < 0) return String.Empty;
+            else if (type >= redAlertOverlayNames.Length) return String.Empty;
+            return redAlertOverlayNames[type];
+        }
+
+        public bool IsOre()
+        {
+            bool ret = false;
+            if (Type == "gold01") ret = true;
+            else if (Type == "gold02") ret = true;
+            else if (Type == "gold03") ret = true;
+            else if (Type == "gold04") ret = true;
+            else if (Type == "gem01") ret = true;
+            else if (Type == "gem02") ret = true;
+            else if (Type == "gem03") ret = true;
+            else if (Type == "gem04") ret = true;
+            else if (Type == "wcrate") ret = true;
+            else if (Type == "scrate") ret = true;
+            return ret;
+        }
+
+        public bool ParseOverlay(int type,int x,int y)
+        {
+            if (!IsOverlay(type)) return false;
+            AType = ActorType.Overlay;
+            Type = redAlertOverlayNames[type];
+            Pos = new Ra95MissionIni_Pos();
+            Pos.x = x;
+            Pos.y = y;
+            Owner = "Neutral";
+            return true;
+        }
+
+        public bool ParseTerrain(String key, String val)
+        {
+            AType = ActorType.Terrain;
+            Type = val;
+            Pos = new Ra95MissionIni_Pos();
+            Pos.Parse(key);
+            Owner = "Neutral";
+            return true;
+        }
+
+        public Ra95MissionIni_Actor Clone()
+        {
+            Ra95MissionIni_Actor ret = new Ra95MissionIni_Actor();
+
+            ret.AType= AType;
+
+            ret.index = index;
+
+            ret.Owner = Owner;
+            ret.Type = Type;
+            ret.Health = Health;
+            ret.Pos = Pos.Clone();
+
+            ret.Direction = Direction;
+            ret.Trigger = Trigger;
+            ret.Sellable = Sellable;
+            ret.Rebuild = Rebuild;
+
+            ret.PositionInCell = PositionInCell;
+            ret.Mission = Mission;
+
+            ret.AlreadyInTeam = AlreadyInTeam;
+
+            return ret;
+        }
     }
 
+    
 }
