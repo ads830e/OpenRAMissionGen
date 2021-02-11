@@ -30,7 +30,7 @@ Players:
 		Enemies: England,Germany,France,Greece,GoodGuy,Spain,Turkey
 	PlayerReference@England:
 		Name: England
-		Faction: england
+		Faction: allies
 		Color: 008080
 		Enemies: Ukraine,USSR,BadGuy
 	PlayerReference@Ukraine:
